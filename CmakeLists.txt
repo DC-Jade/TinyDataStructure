@@ -1,0 +1,4 @@
+cmake_minimum_required (VERSION 2.8)
+project(test)
+set(src_list src/test.cpp include/Vector.h)
+add_executable(test ${src_list})
