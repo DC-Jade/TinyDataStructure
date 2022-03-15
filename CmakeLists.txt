@@ -1,4 +1,11 @@
 cmake_minimum_required (VERSION 2.8)
-project(test)
-set(src_list src/test.cpp include/Vector.h)
-add_executable(test ${src_list})
+project(main)
+
+#  Output dir for the binary
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./bin)
+
+#  src file list
+set(src_list
+		src/main.cpp
+		include/Vector.h)
+add_executable(main.o ${src_list})

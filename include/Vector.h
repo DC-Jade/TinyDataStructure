@@ -1,10 +1,15 @@
 #ifndef DATA_STRUCTURE_LIST_H 
-
+  
 #include <iostream>
 template <typename T>
 const T& max(const T &value1, const T &value2) {
   return (value1 > value2) ? value1 : value2;
 }
+template <typename T>
+class Increase{
+  virtual void operator()(T& e) { e++;  }
+};
+
 namespace mydatastructure {
 
 #define DEFAULT_CAPACITY 10 
@@ -17,22 +22,20 @@ public:
   Vector(Vector<T> const &vec);
   ~Vector();
 
-  T& operator[](Rank r);
+  Vector<T> &operator=(const Vector<T> &vec);
+  T &operator[](Rank r);
   void traverse();
-  // Vector(const T &arr, Rank lo, Rank hi)
-  // {
-  // copyFrom(arr, lo, hi);
-  // }
-  Rank getSize() const {
-    return _size;
-  }
-  Rank getCapacity() {
-    return _capacity;
-  }
+  Rank getSize() const { return _size; }
+  Rank getCapacity() { return _capacity; }
   void expand();
   Rank insert(Rank r, const T& e);
-  int remove(Rank lo, Rank hi);
-  T remove(Rank r);
+  int  remove(Rank lo, Rank hi);
+  T    remove(Rank r);
+  Rank find(const T& e, Rank lo, Rank hi) const;
+  Rank find(const T& e) const;
+  int  deduplicate();
+  void traverse(void ( *visit )( T& ));
+  int  uniquify();
 
 private:
   Rank _size; 
@@ -42,6 +45,16 @@ private:
 
 }
 
+// TODO
+//template <typename T>
+//mydatastructure::Vector<T>& mydatastructure::Vector<T>::operator=(
+//  const mydatastructure::Vector<T>& vec) {
+//  Vector<T> new_vec(_size);
+//  for (Rank i = 0; i < _size; ++i)
+//    new_vec[i] = _elem[i];
+//  return new_vec;
+//}
+
 template <typename T>
 mydatastructure::Vector<T>::Vector(int c) {
   _elem = new T[_capacity = c];
@@ -49,12 +62,13 @@ mydatastructure::Vector<T>::Vector(int c) {
   std::cout << "default constructor of Vector" << std::endl;
 }
 
+// TODO
 template <typename T>
 mydatastructure::Vector<T>::Vector(const Vector<T> &vec) {
-  this->_size = vec->_size;
-  this->_capacity = vec->_capacity;
+  _size = vec._size;
+  _capacity = vec._capacity;
   for (Rank i = 0; i < _size; ++i) {
-    this[i] = vec[i];
+    _elem[i] = vec[i];
   }
 }
 
@@ -121,6 +135,64 @@ T mydatastructure::Vector<T>::remove(Rank r) {
   T old_e = _elem[r];
   remove(r, r + 1);
   return old_e;
+}
+
+// assert: 0<= lo < hi <= _size
+template <typename T>
+mydatastructure::Rank mydatastructure::Vector<T>::find(const T& e, 
+                                                       Rank lo, 
+                                                       Rank hi) const {
+  // reverse find, to maintain stable
+  while ( (lo < hi--) && (e != _elem[hi]) ) { }  
+  return (lo < hi) ? hi : -1;    // false -1
+}
+
+template <typename T>
+mydatastructure::Rank mydatastructure::Vector<T>::find(const T& e) const {
+  return find(e, 0, _size);
+}
+
+template <typename T>
+int mydatastructure::Vector<T>::deduplicate() {
+  Rank old_size = _size;
+  for (Rank i = 0; i < _size;) {
+    if ( find(_elem[i], 0, i) == -1 )
+      ++i;
+    else
+      remove(i);
+  }
+  return old_size - _size;
+}
+
+// TODO
+template <typename T>
+void mydatastructure::Vector<T>::traverse(void ( *visit )( T& )) {
+  for (Rank i = 0; i < _size; ++i)
+    visit(_elem[i]);
+}
+
+template <typename T>
+void increase( mydatastructure::Vector<T>& vec) {
+  vec.traverse(Increase<T>());
+}
+
+// TODO
+//template <typename T> 
+//void checkOrder(mydatastructure::Vector<T>& vec) {
+//  int unsorted = 0;
+//  vec.traverse( CheckOrder<T>(unsorted, vec[0]) );
+//  if (0 < unsorted) 
+//    printf("Unsorted with %d adjacent inversion(s)\n", unsorted);
+//  else 
+//    printf("Sorted\n");
+//}
+
+template <typename T>
+int mydatastructure::Vector<T>::uniquify() {
+  int old_size = _size;
+  for (int i = 1; i < _size; )
+    _elem[i - 1] == _elem[i] ? remove(i) : ++i;
+  return old_size - _size;
 }
 
 #endif

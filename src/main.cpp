@@ -9,10 +9,17 @@ void traverse(Vector<int>& vec) {
   }
 }
 int main() {
+  /* 
+  @ Vector<T>
+  */
   Vector<int> iv(10);
+  //Vector<int> iv1(iv);
   std::cout << "hello, it's vector" << std::endl;
 
-  // vector<T>::insert
+  // Vector<T>::insert
+  for (int i = 0; i < 10; ++i) {
+    std::cout << iv.insert(i,i) << "\t";
+  }
   for (int i = 0; i < 10; ++i) {
     std::cout << iv.insert(i,i) << "\t";
   }
@@ -21,8 +28,32 @@ int main() {
   std::cout << "size before insertion: " << iv.getSize() << std::endl;
   std::cout << "capacity before expanding: " << iv.getCapacity()
             << std::endl;
-  iv.insert(1, 1);
+  iv.insert(1, 10);
   std::cout << "size after insertion: " << iv.getSize() << std::endl;
   std::cout << "capacity after expanding: " << iv.getCapacity()
             << std::endl;
+  iv.traverse();
+  
+  // Vector<T>::remove
+  iv.remove(0, 1);
+  iv.traverse();
+  
+  // Vector<T>::find, unordered
+  iv.insert(1, 1);
+  iv.traverse();
+  std::cout << "find(1, 0, 2): " << iv.find(1, 0, 2) << std::endl;
+  std::cout << "find(1): " << iv.find(1) << std::endl;
+  std::cout << "find(no existence): " << iv.find(11) << std::endl;
+
+  // Vector<T>::deduplicate
+  iv.deduplicate();
+  std::cout << "after deduplicating "; 
+  iv.traverse();
+
+  // Vector<T>::uniquify
+  iv.insert(1, 10);
+  iv.traverse();
+  std::cout << "after uniquify "; 
+  iv.uniquify();
+  iv.traverse();
 }
