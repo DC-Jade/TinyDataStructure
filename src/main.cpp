@@ -1,5 +1,6 @@
 #include "../include/Vector.h"
 #include <iostream>
+
 using mydatastructure::Vector;
 
 void traverse(Vector<int>& vec) {
@@ -8,11 +9,13 @@ void traverse(Vector<int>& vec) {
     std::cout << vec[i] << "\t";
   }
 }
+
 int main() {
   /* 
   @ Vector<T>
   */
   Vector<int> iv(10);
+  Vector<int> iv_ordered(10);
   //Vector<int> iv1(iv);
   std::cout << "hello, it's vector" << std::endl;
 
@@ -21,7 +24,7 @@ int main() {
     std::cout << iv.insert(i,i) << "\t";
   }
   for (int i = 0; i < 10; ++i) {
-    std::cout << iv.insert(i,i) << "\t";
+    std::cout << iv_ordered.insert(i,i) << "\t";
   }
   iv.traverse();
   std::cout << std::endl;
@@ -56,4 +59,8 @@ int main() {
   std::cout << "after uniquify "; 
   iv.uniquify();
   iv.traverse();
+
+  // Vector<T>::search
+  iv_ordered.traverse();
+  std::cout << "search(2): " << iv_ordered.search(2) << std::endl;
 }

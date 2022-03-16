@@ -36,6 +36,8 @@ public:
   int  deduplicate();
   void traverse(void ( *visit )( T& ));
   int  uniquify();
+  Rank search(const T &e, Rank lo, Rank hi) const;
+  Rank search(const T &e) const;
 
 private:
   Rank _size; 
@@ -195,4 +197,33 @@ int mydatastructure::Vector<T>::uniquify() {
   return old_size - _size;
 }
 
+// assert: 0 <= lo < hi <=_size
+template <typename T>
+mydatastructure::Rank mydatastructure::Vector<T>::search(
+  const T& e, Rank lo, Rank hi ) const {
+  //return (rand() % 2) ? binSearch(_elem, e, lo, hi)
+  //                    : fibSearch(_elem, e, lo, hi);
+  binSearch(_elem, e, lo, hi);
+}
+
+template <typename T>
+static mydatastructure::Rank binSearch(
+  T* vec, const T& e,
+  mydatastructure::Rank lo, mydatastructure::Rank hi) {
+  while (lo < hi) {
+    mydatastructure::Rank mi = (lo + hi) >> 1;
+    if (e < vec[mi])
+      hi = mi;
+    else if (vec[mi] < e)
+      lo = mi + 1;
+    else
+      return mi;
+  }
+  return -1;  // false
+}
+
+template <typename T>
+mydatastructure::Rank mydatastructure::Vector<T>::search(const T &e) const {
+  return binSearch(_elem, e, 0, _size);
+}
 #endif
