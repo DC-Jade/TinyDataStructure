@@ -1,10 +1,13 @@
 #ifndef DATA_STRUCTURE_LIST_H 
+#define DATA_STRUCTURE_LIST_H 
   
 #include <iostream>
+
 template <typename T>
 const T& max(const T &value1, const T &value2) {
   return (value1 > value2) ? value1 : value2;
 }
+
 template <typename T>
 class Increase{
   virtual void operator()(T& e) { e++;  }
@@ -38,6 +41,12 @@ public:
   int  uniquify();
   Rank search(const T &e, Rank lo, Rank hi) const;
   Rank search(const T &e) const;
+  void sort(Rank lo, Rank hi);
+  // assert: 0 <= lo < hi <= _size
+  void bubbleSort(Rank lo, Rank hi);
+  void merge(Rank lo, Rank mi, Rank hi);
+  void mergeSort(Rank lo, Rank hi);
+  // NEXT
 
 private:
   Rank _size; 
@@ -201,8 +210,6 @@ int mydatastructure::Vector<T>::uniquify() {
 template <typename T>
 mydatastructure::Rank mydatastructure::Vector<T>::search(
   const T& e, Rank lo, Rank hi ) const {
-  //return (rand() % 2) ? binSearch(_elem, e, lo, hi)
-  //                    : fibSearch(_elem, e, lo, hi);
   binSearch(_elem, e, lo, hi);
 }
 
@@ -226,4 +233,82 @@ template <typename T>
 mydatastructure::Rank mydatastructure::Vector<T>::search(const T &e) const {
   return binSearch(_elem, e, 0, _size);
 }
+
+template <typename T>
+void swap(T& lhs, T& rhs) {
+  T tmp;
+  tmp = lhs;
+  lhs = rhs;
+  rhs = tmp;
+}
+
+// assert: 0 <= lo < hi <= _size
+template <typename T>
+void mydatastructure::Vector<T>::bubbleSort(
+  mydatastructure::Rank lo,
+  mydatastructure::Rank hi) {
+  while (lo < --hi) {
+    for (mydatastructure::Rank i = lo; i < hi; i++) 
+      if (_elem[i] > _elem[i + 1]) {
+        //int lhs = _elem[i];
+        //int rhs = _elem[i + 1];
+        swap(_elem[i], _elem[i + 1]);
+        //lhs = _elem[i];
+        //rhs = _elem[i + 1];
+      }    
+    
+  }
+}
+
+template <typename T>
+void mydatastructure::Vector<T>::merge(
+  // setp1: split two ordered part lvec[lo, mi) & rvec[mi, hi)
+  mydatastructure::Rank lo,
+  mydatastructure::Rank mi,
+  mydatastructure::Rank hi) {
+  mydatastructure::Rank i = 0;
+  T *target_vec = _elem + lo;  // target_vec = _elem[lo, hi)
+  mydatastructure::Rank j = 0;
+  mydatastructure::Rank lvec_len = mi - lo;  //left vector length
+  T *lvec = new T[lvec_len];
+  for (mydatastructure::Rank i = 0; i < lvec_len; ++i)
+    lvec[i] = target_vec[i];
+  mydatastructure::Rank k = 0, rvec_len = hi - mi;
+  T *rvec = _elem + mi;  // rvec[0, rvec_len] = _elem[mi, hi]
+
+  // step2: merge left and right vector
+  while ( (j < lvec_len) && (k < rvec_len) )  // lvec become empty before rvec & lvec is lower than rvec default
+    target_vec[i++] = (lvec[j] < rvec[k]) ? lvec[j++] : rvec[k++];
+  while (j < lvec_len)  // rvec become empty  before lvec
+    target_vec[i++] = lvec[j++];
+  delete[] lvec;
+}
+
+template <typename T>
+void mydatastructure::Vector<T>::mergeSort(
+  mydatastructure::Rank lo,
+  mydatastructure::Rank hi){
+  if (hi - lo < 2) return;
+  //int mi = lo + ((hi - lo) >> 1);
+  int mi = (lo + hi) >> 1;
+  mergeSort(lo, mi);
+  mergeSort(mi, hi);
+  merge(lo, mi, hi);
+}
+
+template <typename T>
+void mydatastructure::Vector<T>::sort(
+  mydatastructure::Rank lo,
+  mydatastructure::Rank hi) {
+  switch (rand() % 2) {
+    case 0:
+      bubbleSort(lo, hi);
+      break;
+    case 1:
+      bubbleSort(lo, hi);
+      break;
+  }  
+}
+
+
 #endif

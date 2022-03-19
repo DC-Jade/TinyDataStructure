@@ -1,5 +1,5 @@
-#include "../include/Vector.h"
 #include <iostream>
+#include "../include/Vector.h"
 
 using mydatastructure::Vector;
 
@@ -63,4 +63,30 @@ int main() {
   // Vector<T>::search
   iv_ordered.traverse();
   std::cout << "search(2): " << iv_ordered.search(2) << std::endl;
+
+  // swap
+  int iv0 = iv[0];
+  int iv9 = iv[10];
+  swap(iv[0], iv[10]);
+  iv0 = iv[0];
+  iv9 = iv[10];
+  
+  // bubbleSort
+  //iv.traverse();
+  std::cout << "iv.size: " << iv.getSize() << std::endl; 
+  std::cout << "unsorted: ";
+  iv.traverse();
+  iv.bubbleSort(0, 10);
+  std::cout << "sorted: ";
+  iv.traverse();
+
+  // mergeSort
+  iv.insert(5, 8);
+  std::cout << "iv.size: " << iv.getSize() << std::endl; 
+  std::cout << "unsorted: ";
+  iv.traverse();
+  iv.mergeSort(0, 11);
+  std::cout << "sorted: ";
+  iv.traverse();
+
 }
