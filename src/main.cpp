@@ -1,7 +1,10 @@
 #include <iostream>
 #include "../include/Vector.h"
+#include "../include/List.h"
 
 using mydatastructure::Vector;
+using mydatastructure::List;
+using mydatastructure::ListNode;
 
 void traverse(Vector<int>& vec) {
   int vec_size = vec.getSize();
@@ -12,8 +15,9 @@ void traverse(Vector<int>& vec) {
 
 int main() {
   /* 
-  @ Vector<T>
+  @ Vector<T> test
   */
+  /*
   Vector<int> iv(10);
   Vector<int> iv_ordered(10);
   //Vector<int> iv1(iv);
@@ -85,8 +89,23 @@ int main() {
   std::cout << "iv.size: " << iv.getSize() << std::endl; 
   std::cout << "unsorted: ";
   iv.traverse();
-  iv.mergeSort(0, 11);
+  iv.mergeSort(3,7);
+  iv.mergeSort();
   std::cout << "sorted: ";
   iv.traverse();
+  */
 
+
+  /*
+  @ List<T> test
+  */
+  // List<T>::init
+  List<int> list;
+  for (int i = 0, size = 10; i < size; ++i) {
+    list.InsertAfter(list.Last(), i);
+  }
+  for (int i = 0; i < list.Size(); ++i) {
+    std::cout << list.Last()->data << std::endl;
+  }
+  // NEXT
 }

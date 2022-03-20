@@ -13,6 +13,9 @@ class Increase{
   virtual void operator()(T& e) { e++;  }
 };
 
+// TODO
+class Bitmap;
+
 namespace mydatastructure {
 
 #define DEFAULT_CAPACITY 10 
@@ -32,8 +35,8 @@ public:
   Rank getCapacity() { return _capacity; }
   void expand();
   Rank insert(Rank r, const T& e);
-  int  remove(Rank lo, Rank hi);
-  T    remove(Rank r);
+  int  remove(Rank lo, Rank hi);  // remove [lo, hi)
+  T    remove(Rank r);            // remove [r, r + 1)
   Rank find(const T& e, Rank lo, Rank hi) const;
   Rank find(const T& e) const;
   int  deduplicate();
@@ -46,6 +49,7 @@ public:
   void bubbleSort(Rank lo, Rank hi);
   void merge(Rank lo, Rank mi, Rank hi);
   void mergeSort(Rank lo, Rank hi);
+  void mergeSort();  // mergeSort(0, _size)
   // NEXT
 
 private:
@@ -310,5 +314,9 @@ void mydatastructure::Vector<T>::sort(
   }  
 }
 
+template <typename T>
+void mydatastructure::Vector<T>::mergeSort() {
+  mergeSort(0, _size);
+}
 
 #endif
