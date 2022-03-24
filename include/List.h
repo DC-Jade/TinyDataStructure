@@ -219,13 +219,15 @@ ListNodePosi(T) List<T>::Search(const T &e, int n, ListNodePosi(T) p) const {
   return p;
 }
 
+// TODO
 template <typename T>
 void List<T>::SelectionSort(ListNodePosi(T) ptr, int n){
-  ListNodePosi(T) head = ptr->_pred, tail = ptr;
+  ListNodePosi(T) head = ptr->_pred;
+  ListNodePosi(T) tail = ptr;
   for (Rank i = 0; i < n; ++i)
     tail = tail->_succ;
   while (0 < --n) {
-    InsertBefore(Remove(SelectMax(head->_succ)), tail);
+    InsertBefore(tail, Remove(SelectMax(head->_succ, n)));
     tail = tail->_pred;
   }
 }
