@@ -6,8 +6,8 @@ using mydatastructure::Vector;
 using mydatastructure::List;
 using mydatastructure::ListNode;
 
-void traverse(Vector<int>& vec) {
-  int vec_size = vec.getSize();
+void Tranverse(Vector<int>& vec) {
+  int vec_size = vec.GetSize();
   for (int i = 0; i < vec_size; ++i) {
     std::cout << vec[i] << "\t";
   }
@@ -17,56 +17,55 @@ int main() {
   /* 
   @ Vector<T> test
   */
-  /*
   Vector<int> iv(10);
   Vector<int> iv_ordered(10);
   //Vector<int> iv1(iv);
   std::cout << "hello, it's vector" << std::endl;
 
-  // Vector<T>::insert
+  // Vector<T>::Insert
   for (int i = 0; i < 10; ++i) {
-    std::cout << iv.insert(i,i) << "\t";
+    std::cout << iv.Insert(i,i) << "\t";
   }
   for (int i = 0; i < 10; ++i) {
-    std::cout << iv_ordered.insert(i,i) << "\t";
+    std::cout << iv_ordered.Insert(i,i) << "\t";
   }
-  iv.traverse();
+  iv.Tranverse();
   std::cout << std::endl;
-  std::cout << "size before insertion: " << iv.getSize() << std::endl;
-  std::cout << "capacity before expanding: " << iv.getCapacity()
+  std::cout << "size before Insertion: " << iv.GetSize() << std::endl;
+  std::cout << "capacity before expanding: " << iv.GetCapacity()
             << std::endl;
-  iv.insert(1, 10);
-  std::cout << "size after insertion: " << iv.getSize() << std::endl;
-  std::cout << "capacity after expanding: " << iv.getCapacity()
+  iv.Insert(1, 10);
+  std::cout << "size after Insertion: " << iv.GetSize() << std::endl;
+  std::cout << "capacity after expanding: " << iv.GetCapacity()
             << std::endl;
-  iv.traverse();
+  iv.Tranverse();
   
-  // Vector<T>::remove
-  iv.remove(0, 1);
-  iv.traverse();
+  // Vector<T>::Remove
+  iv.Remove(0, 1);
+  iv.Tranverse();
   
-  // Vector<T>::find, unordered
-  iv.insert(1, 1);
-  iv.traverse();
-  std::cout << "find(1, 0, 2): " << iv.find(1, 0, 2) << std::endl;
-  std::cout << "find(1): " << iv.find(1) << std::endl;
-  std::cout << "find(no existence): " << iv.find(11) << std::endl;
+  // Vector<T>::Find, unordered
+  iv.Insert(1, 1);
+  iv.Tranverse();
+  std::cout << "Find(1, 0, 2): " << iv.Find(1, 0, 2) << std::endl;
+  std::cout << "Find(1): " << iv.Find(1) << std::endl;
+  std::cout << "Find(no existence): " << iv.Find(11) << std::endl;
 
-  // Vector<T>::deduplicate
-  iv.deduplicate();
+  // Vector<T>::Deduplicate
+  iv.Deduplicate();
   std::cout << "after deduplicating "; 
-  iv.traverse();
+  iv.Tranverse();
 
-  // Vector<T>::uniquify
-  iv.insert(1, 10);
-  iv.traverse();
-  std::cout << "after uniquify "; 
-  iv.uniquify();
-  iv.traverse();
+  // Vector<T>::Uniquify
+  iv.Insert(1, 10);
+  iv.Tranverse();
+  std::cout << "after Uniquify "; 
+  iv.Uniquify();
+  iv.Tranverse();
 
-  // Vector<T>::search
-  iv_ordered.traverse();
-  std::cout << "search(2): " << iv_ordered.search(2) << std::endl;
+  // Vector<T>::Search
+  iv_ordered.Tranverse();
+  std::cout << "Search(2): " << iv_ordered.Search(2) << std::endl;
 
   // swap
   int iv0 = iv[0];
@@ -75,25 +74,24 @@ int main() {
   iv0 = iv[0];
   iv9 = iv[10];
   
-  // bubbleSort
-  //iv.traverse();
-  std::cout << "iv.size: " << iv.getSize() << std::endl; 
-  std::cout << "unsorted: ";
-  iv.traverse();
-  iv.bubbleSort(0, 10);
-  std::cout << "sorted: ";
-  iv.traverse();
+  // BubbleSort
+  //iv.Tranverse();
+  std::cout << "iv.size: " << iv.GetSize() << std::endl; 
+  std::cout << "unSorted: ";
+  iv.Tranverse();
+  iv.BubbleSort(0, 10);
+  std::cout << "Sorted: ";
+  iv.Tranverse();
 
-  // mergeSort
-  iv.insert(5, 8);
-  std::cout << "iv.size: " << iv.getSize() << std::endl; 
-  std::cout << "unsorted: ";
-  iv.traverse();
-  iv.mergeSort(3,7);
-  iv.mergeSort();
-  std::cout << "sorted: ";
-  iv.traverse();
-  */
+  // MergeSort
+  iv.Insert(5, 8);
+  std::cout << "iv.size: " << iv.GetSize() << std::endl; 
+  std::cout << "unSorted: ";
+  iv.Tranverse();
+  iv.MergeSort(3,7);
+  iv.MergeSort();
+  std::cout << "Sorted: ";
+  iv.Tranverse();
 
 
   /*

@@ -4,7 +4,7 @@
 #include <iostream>
 
 template <typename T>
-const T& max(const T &value1, const T &value2) {
+const T& Max(const T &value1, const T &value2) {
   return (value1 > value2) ? value1 : value2;
 }
 
@@ -30,26 +30,26 @@ public:
 
   Vector<T> &operator=(const Vector<T> &vec);
   T &operator[](Rank r);
-  void traverse();
-  Rank getSize() const { return _size; }
-  Rank getCapacity() { return _capacity; }
-  void expand();
-  Rank insert(Rank r, const T& e);
-  int  remove(Rank lo, Rank hi);  // remove [lo, hi)
-  T    remove(Rank r);            // remove [r, r + 1)
-  Rank find(const T& e, Rank lo, Rank hi) const;
-  Rank find(const T& e) const;
-  int  deduplicate();
-  void traverse(void ( *visit )( T& ));
-  int  uniquify();
-  Rank search(const T &e, Rank lo, Rank hi) const;
-  Rank search(const T &e) const;
-  void sort(Rank lo, Rank hi);
+  void Tranverse();
+  Rank GetSize() const { return _size; }
+  Rank GetCapacity() { return _capacity; }
+  void Expand();
+  Rank Insert(Rank r, const T& e);
+  int  Remove(Rank lo, Rank hi);  // Remove [lo, hi)
+  T    Remove(Rank r);            // Remove [r, r + 1)
+  Rank Find(const T& e, Rank lo, Rank hi) const;
+  Rank Find(const T& e) const;
+  int  Deduplicate();
+  void Tranverse(void ( *visit )( T& ));
+  int  Uniquify();
+  Rank Search(const T &e, Rank lo, Rank hi) const;
+  Rank Search(const T &e) const;
+  void Sort(Rank lo, Rank hi);
   // assert: 0 <= lo < hi <= _size
-  void bubbleSort(Rank lo, Rank hi);
-  void merge(Rank lo, Rank mi, Rank hi);
-  void mergeSort(Rank lo, Rank hi);
-  void mergeSort();  // mergeSort(0, _size)
+  void BubbleSort(Rank lo, Rank hi);
+  void Merge(Rank lo, Rank mi, Rank hi);
+  void MergeSort(Rank lo, Rank hi);
+  void MergeSort();  // MergeSort(0, _size)
   // NEXT
 
 private:
@@ -98,9 +98,9 @@ T& mydatastructure::Vector<T>::operator[](Rank r) {
 }
 
 template <typename T>
-void mydatastructure::Vector<T>::traverse() {
+void mydatastructure::Vector<T>::Tranverse() {
   // Vector<int> iv;
-  std::cout << "traverse " << std::endl;
+  std::cout << "Tranverse " << std::endl;
   for (int i = 0; i < _size; ++i)
   {
     std::cout << _elem[i] << "\t";
@@ -109,9 +109,9 @@ void mydatastructure::Vector<T>::traverse() {
 }
 
 template <typename T>
-void mydatastructure::Vector<T>::expand() {
+void mydatastructure::Vector<T>::Expand() {
   if (_size < _capacity) return;
-  _capacity = max(_capacity, DEFAULT_CAPACITY);
+  _capacity = Max(_capacity, DEFAULT_CAPACITY);
   T *old_elem = _elem;
   _elem = new T[_capacity << 1];  // multiple two
   for (int i = 0; i < _size; ++i) 
@@ -121,8 +121,8 @@ void mydatastructure::Vector<T>::expand() {
 }
 
 template <typename T>
-mydatastructure::Rank mydatastructure::Vector<T>::insert(Rank r, const T& e) {
-  expand();
+mydatastructure::Rank mydatastructure::Vector<T>::Insert(Rank r, const T& e) {
+  Expand();
   for (Rank i = _size; i > r; --i) {
     _elem[i] = _elem[i - 1];
   }
@@ -131,9 +131,9 @@ mydatastructure::Rank mydatastructure::Vector<T>::insert(Rank r, const T& e) {
   return r;
 }
 
-// remove [lo, hi)
+// Remove [lo, hi)
 template <typename T>
-int mydatastructure::Vector<T>::remove(
+int mydatastructure::Vector<T>::Remove(
   mydatastructure::Rank lo,                                    mydatastructure::Rank hi) {
     if (lo == hi) return 0;
     while (hi < _size)
@@ -144,75 +144,75 @@ int mydatastructure::Vector<T>::remove(
     return (hi - lo);
 }
 
-// remove single value
+// Remove single value
 template <typename T>
-T mydatastructure::Vector<T>::remove(Rank r) {
+T mydatastructure::Vector<T>::Remove(Rank r) {
   T old_e = _elem[r];
-  remove(r, r + 1);
+  Remove(r, r + 1);
   return old_e;
 }
 
 // assert: 0<= lo < hi <= _size
 template <typename T>
-mydatastructure::Rank mydatastructure::Vector<T>::find(const T& e, 
+mydatastructure::Rank mydatastructure::Vector<T>::Find(const T& e, 
                                                        Rank lo, 
                                                        Rank hi) const {
-  // reverse find, to maintain stable
+  // reverse Find, to maintain stable
   while ( (lo < hi--) && (e != _elem[hi]) ) { }  
   return (lo < hi) ? hi : -1;    // false -1
 }
 
 template <typename T>
-mydatastructure::Rank mydatastructure::Vector<T>::find(const T& e) const {
-  return find(e, 0, _size);
+mydatastructure::Rank mydatastructure::Vector<T>::Find(const T& e) const {
+  return Find(e, 0, _size);
 }
 
 template <typename T>
-int mydatastructure::Vector<T>::deduplicate() {
+int mydatastructure::Vector<T>::Deduplicate() {
   Rank old_size = _size;
   for (Rank i = 0; i < _size;) {
-    if ( find(_elem[i], 0, i) == -1 )
+    if ( Find(_elem[i], 0, i) == -1 )
       ++i;
     else
-      remove(i);
+      Remove(i);
   }
   return old_size - _size;
 }
 
 // TODO
 template <typename T>
-void mydatastructure::Vector<T>::traverse(void ( *visit )( T& )) {
+void mydatastructure::Vector<T>::Tranverse(void ( *visit )( T& )) {
   for (Rank i = 0; i < _size; ++i)
     visit(_elem[i]);
 }
 
 template <typename T>
 void increase( mydatastructure::Vector<T>& vec) {
-  vec.traverse(Increase<T>());
+  vec.Tranverse(Increase<T>());
 }
 
 // TODO
 //template <typename T> 
 //void checkOrder(mydatastructure::Vector<T>& vec) {
-//  int unsorted = 0;
-//  vec.traverse( CheckOrder<T>(unsorted, vec[0]) );
-//  if (0 < unsorted) 
-//    printf("Unsorted with %d adjacent inversion(s)\n", unsorted);
+//  int unSorted = 0;
+//  vec.Tranverse( CheckOrder<T>(unSorted, vec[0]) );
+//  if (0 < unSorted) 
+//    printf("UnSorted with %d adjacent inversion(s)\n", unSorted);
 //  else 
 //    printf("Sorted\n");
 //}
 
 template <typename T>
-int mydatastructure::Vector<T>::uniquify() {
+int mydatastructure::Vector<T>::Uniquify() {
   int old_size = _size;
   for (int i = 1; i < _size; )
-    _elem[i - 1] == _elem[i] ? remove(i) : ++i;
+    _elem[i - 1] == _elem[i] ? Remove(i) : ++i;
   return old_size - _size;
 }
 
 // assert: 0 <= lo < hi <=_size
 template <typename T>
-mydatastructure::Rank mydatastructure::Vector<T>::search(
+mydatastructure::Rank mydatastructure::Vector<T>::Search(
   const T& e, Rank lo, Rank hi ) const {
   binSearch(_elem, e, lo, hi);
 }
@@ -234,7 +234,7 @@ static mydatastructure::Rank binSearch(
 }
 
 template <typename T>
-mydatastructure::Rank mydatastructure::Vector<T>::search(const T &e) const {
+mydatastructure::Rank mydatastructure::Vector<T>::Search(const T &e) const {
   return binSearch(_elem, e, 0, _size);
 }
 
@@ -248,7 +248,7 @@ void swap(T& lhs, T& rhs) {
 
 // assert: 0 <= lo < hi <= _size
 template <typename T>
-void mydatastructure::Vector<T>::bubbleSort(
+void mydatastructure::Vector<T>::BubbleSort(
   mydatastructure::Rank lo,
   mydatastructure::Rank hi) {
   while (lo < --hi) {
@@ -265,7 +265,7 @@ void mydatastructure::Vector<T>::bubbleSort(
 }
 
 template <typename T>
-void mydatastructure::Vector<T>::merge(
+void mydatastructure::Vector<T>::Merge(
   // setp1: split two ordered part lvec[lo, mi) & rvec[mi, hi)
   mydatastructure::Rank lo,
   mydatastructure::Rank mi,
@@ -280,7 +280,7 @@ void mydatastructure::Vector<T>::merge(
   mydatastructure::Rank k = 0, rvec_len = hi - mi;
   T *rvec = _elem + mi;  // rvec[0, rvec_len] = _elem[mi, hi]
 
-  // step2: merge left and right vector
+  // step2: Merge left and right vector
   while ( (j < lvec_len) && (k < rvec_len) )  // lvec become empty before rvec & lvec is lower than rvec default
     target_vec[i++] = (lvec[j] < rvec[k]) ? lvec[j++] : rvec[k++];
   while (j < lvec_len)  // rvec become empty  before lvec
@@ -289,34 +289,34 @@ void mydatastructure::Vector<T>::merge(
 }
 
 template <typename T>
-void mydatastructure::Vector<T>::mergeSort(
+void mydatastructure::Vector<T>::MergeSort(
   mydatastructure::Rank lo,
   mydatastructure::Rank hi){
   if (hi - lo < 2) return;
   //int mi = lo + ((hi - lo) >> 1);
   int mi = (lo + hi) >> 1;
-  mergeSort(lo, mi);
-  mergeSort(mi, hi);
-  merge(lo, mi, hi);
+  MergeSort(lo, mi);
+  MergeSort(mi, hi);
+  Merge(lo, mi, hi);
 }
 
 template <typename T>
-void mydatastructure::Vector<T>::sort(
+void mydatastructure::Vector<T>::Sort(
   mydatastructure::Rank lo,
   mydatastructure::Rank hi) {
   switch (rand() % 2) {
     case 0:
-      bubbleSort(lo, hi);
+      BubbleSort(lo, hi);
       break;
     case 1:
-      bubbleSort(lo, hi);
+      BubbleSort(lo, hi);
       break;
   }  
 }
 
 template <typename T>
-void mydatastructure::Vector<T>::mergeSort() {
-  mergeSort(0, _size);
+void mydatastructure::Vector<T>::MergeSort() {
+  MergeSort(0, _size);
 }
 
 #endif
