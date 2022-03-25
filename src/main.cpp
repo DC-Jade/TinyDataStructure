@@ -1,13 +1,15 @@
 #include <iostream>
 #include "../include/Vector.h"
 #include "../include/List.h"
+#include "../include/Stack.h"
 
 using mydatastructure::Vector;
 using mydatastructure::List;
 using mydatastructure::ListNode;
+using mydatastructure::Stack;
 
 void Tranverse(Vector<int>& vec) {
-  int vec_size = vec.GetSize();
+  int vec_size = vec.Size();
   for (int i = 0; i < vec_size; ++i) {
     std::cout << vec[i] << "\t";
   }
@@ -17,6 +19,7 @@ int main() {
   /* 
   @ Vector<T> test
   */
+ /*
   Vector<int> iv(10);
   Vector<int> iv_ordered(10);
   //Vector<int> iv1(iv);
@@ -92,12 +95,12 @@ int main() {
   iv.MergeSort();
   std::cout << "Sorted: ";
   iv.Tranverse();
-
+  */
 
   /*
   @ List<T> test
   */
-  // List<T>::init
+  /*
   List<int> list;
   // List<T>::InsertAfter
   for (int i = 0, size = 10; i < size; ++i) {
@@ -154,5 +157,17 @@ int main() {
   std::cout << "After MergeSort: " << std::endl;
   list.MergeSort();
   list.Tranverse();
-  // NEXT
+  */
+
+  /*
+  @ Stack<T>
+  */
+  Stack<int> stack;
+  // Stack<T>::Push, Pop, Top
+  stack.Push(2);
+  std::cout << stack.Pop() << std::endl;
+  stack.Push(2);
+  std::cout << stack.Top() << std::endl;
+  std::cout << stack.Size() << std::endl;
+  std::cout << (stack.Empty() ? "Empty" : "Not empty") << std::endl;
 }

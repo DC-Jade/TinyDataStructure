@@ -31,10 +31,13 @@ public:
   Vector<T> &operator=(const Vector<T> &vec);
   T &operator[](Rank r);
   void Tranverse();
-  Rank GetSize() const { return _size; }
-  Rank GetCapacity() { return _capacity; }
+  Rank Size() const { return _size; }
+  Rank Capacity() { return _capacity; }
   void Expand();
   Rank Insert(Rank r, const T& e);
+  Rank Insert(const T& e) {
+    return Insert(_size,e);
+  }
   int  Remove(Rank lo, Rank hi);  // Remove [lo, hi)
   T    Remove(Rank r);            // Remove [r, r + 1)
   Rank Find(const T& e, Rank lo, Rank hi) const;
