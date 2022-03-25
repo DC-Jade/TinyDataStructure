@@ -2,11 +2,13 @@
 #include "../include/Vector.h"
 #include "../include/List.h"
 #include "../include/Stack.h"
+#include "../include/Queue.h"
 
 using mydatastructure::Vector;
 using mydatastructure::List;
 using mydatastructure::ListNode;
 using mydatastructure::Stack;
+using mydatastructure::Queue;
 
 void Tranverse(Vector<int>& vec) {
   int vec_size = vec.Size();
@@ -162,6 +164,7 @@ int main() {
   /*
   @ Stack<T>
   */
+  /*
   Stack<int> stack;
   // Stack<T>::Push, Pop, Top
   stack.Push(2);
@@ -170,4 +173,15 @@ int main() {
   std::cout << stack.Top() << std::endl;
   std::cout << stack.Size() << std::endl;
   std::cout << (stack.Empty() ? "Empty" : "Not empty") << std::endl;
+  */
+
+  /*
+  @ Queue<T>
+  */
+  Queue<int> queue;
+  queue.Enqueue(2);
+  queue.Enqueue(1);
+  std::cout << queue.Front() << std::endl;
+  std::cout << queue.Dequeue() << std::endl;
+  std::cout << queue.Size() << std::endl;
 }
