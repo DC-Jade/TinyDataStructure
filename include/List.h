@@ -47,7 +47,7 @@ public:
   void            InsertAfter(ListNodePosi(T) p, const T &e);
   void            InsertBefore(ListNodePosi(T) p, const T &e);
   T Remove(ListNodePosi(T) p);
-  void Merge(List<T> &list) {
+  ListNodePosi(T) Merge(List<T> &list) {
     return Merge(First(), _size, list.First(), list._size);
   }
   void Sort(ListNodePosi(T) p, int n);
@@ -60,8 +60,11 @@ public:
   void Init();
   int  Clear();
   void CopyNodes(ListNodePosi(T), int);
-  void Merge(ListNodePosi(T), int, ListNodePosi(T), int);
+  ListNodePosi(T) Merge(ListNodePosi(T), int, List<T> &list, ListNodePosi(T), int);
   void MergeSort(ListNodePosi(T) , int);
+  void MergeSort() {
+    MergeSort(First(), _size);
+  }
   void SelectionSort(ListNodePosi(T), int);
   void SelectionSort() {
     SelectionSort(First(), _size);
@@ -255,6 +258,36 @@ void List<T>::InsertionSort(ListNodePosi(T) ptr, int n) {
   }
 }
 
+template <typename T>
+void List<T>::MergeSort(ListNodePosi(T) p, int n) {
+  if (n < 2)
+    return;
+  ListNodePosi(T) q = p;
+  int mid = n >> 1;
+  for (int i = 0; i < mid; ++i)
+    q = q->_succ;
+  MergeSort(p, mid);
+  MergeSort(q, n - mid);
+  p = Merge(p, mid, *this, q, n - mid);
+}
+
+// TODO
+template <typename T>
+ListNodePosi(T) List<T>::Merge(ListNodePosi(T) p, int n,
+    List<T> &list, ListNodePosi(T) q, int m) {
+  ListNodePosi(T) p_pred = p->_pred;
+  while ( (0 < m) && (q != p) ) {
+    if ( (0 < n) && (p->_data <= q->_data) ) {
+      p = p->_succ;
+      --n;
+    } else {
+      q = q->_succ;
+      InsertBefore(p, list.Remove(q->_pred));
+      --m;
+    }
+  }
+  return p_pred->_succ;
+}  // O(n + m)
 
 }  // namespace mydatastructure
 

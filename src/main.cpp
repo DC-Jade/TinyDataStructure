@@ -148,5 +148,13 @@ int main() {
   std::cout << "After InsertionSort: " << std::endl;
   list.InsertionSort();
   list.Tranverse();
+  // List<T>::MergeSort
+  std::cout << "Before MergeSort: " << std::endl;
+  list.InsertAsFirst(10);
+  list.InsertAsFirst(5);
+  list.Tranverse();
+  std::cout << "After MergeSort: " << std::endl;
+  list.MergeSort();
+  list.Tranverse();
   // NEXT
 }
