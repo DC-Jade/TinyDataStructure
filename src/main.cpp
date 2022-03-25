@@ -110,7 +110,7 @@ int main() {
   // List<T>::operator[]
   std::cout << list[1] << std::endl;
   // List<T>::Find
-  std::cout << "list.Find(2): " << list.Find(2)->data << std::endl;
+  std::cout << "list.Find(2): " << list.Find(2)->_data << std::endl;
   // List<T>::Remove
   std::cout << list.Remove(list.Find(0));
   // List<T>::Deduplicate
@@ -126,7 +126,7 @@ int main() {
   for (int i = 0, size = 4; i < size; ++i) {
     list.InsertAfter(list.Last(), i % 5);
   }
-  list.InsertAfter(list.Find(2), list.Find(2)->data);
+  list.InsertAfter(list.Find(2), list.Find(2)->_data);
   std::cout << "Before Uniquify: " << std::endl;
   list.Tranverse();
   std::cout << "After Uniquify: " << std::endl;
@@ -134,12 +134,19 @@ int main() {
   list.Tranverse();
   //ListNodePosi(int) tmp = list.Search(2);
   // List<T>::Search
-  std::cout << list.Search(2)->data << std::endl;
+  std::cout << list.Search(2)->_data << std::endl;
+  // List<T>::SelectionSort 
   list.InsertAsFirst(10);
   list.InsertAsFirst(5);
   list.Tranverse();
-  //TODO  List<T>::SelectionSort 
   list.SelectionSort();
+  // List<T>::InsertionSort
+  std::cout << "Before InsertionSort: " << std::endl;
+  list.InsertAsFirst(10);
+  list.InsertAsFirst(5);
+  list.Tranverse();
+  std::cout << "After InsertionSort: " << std::endl;
+  list.InsertionSort();
   list.Tranverse();
   // NEXT
 }

@@ -11,12 +11,12 @@ typedef int Rank;
 template <typename T>
 class ListNode{
 public:
-  T data;
+  T _data;
   ListNodePosi(T) _pred;
   ListNodePosi(T) _succ;
   ListNode(){};
   ListNode(T e, ListNodePosi(T) p = nullptr, ListNodePosi(T) s = nullptr)
-      : data(e), _pred(p), _succ(s) {}
+      : _data(e), _pred(p), _succ(s) {}
 
   // interface
   ListNodePosi(T) InsertAsPred(const T &e);

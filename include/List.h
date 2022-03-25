@@ -67,7 +67,9 @@ public:
     SelectionSort(First(), _size);
   }
   void InsertionSort(ListNodePosi(T), int);
-
+  void InsertionSort() {
+    InsertionSort(First(), _size);
+  }
 
 private:
   int _size;
@@ -101,7 +103,7 @@ void List<T>::InsertAfter(ListNodePosi(T) p, const T &e) {
 
 template <typename T>
 T List<T>::Remove(ListNodePosi(T) p) {
-  T e = p->data;
+  T e = p->_data;
   p->_pred->_succ = p->_succ;
   p->_succ->_pred = p->_pred;
   delete p;
@@ -125,7 +127,7 @@ template <typename T>
 void List<T>::CopyNodes(ListNodePosi(T) p, int n) {
   Init();
   while (n--) {
-    InsertAsLast(p->data);
+    InsertAsLast(p->_data);
     p = p->_succ;
   }
 }
@@ -152,13 +154,13 @@ T List<T>::operator[](Rank r) const {
   ListNodePosi(T) p = First();
   while (0 < r--)
     p = p->_succ;
-  return p->data;
+  return p->_data;
 }
 
 template <typename T>
 void List<T>::Tranverse() const {
   for (ListNodePosi(T) ptr = First(); ptr != _trailer; ptr = ptr->_succ) {
-    std::cout << ptr->data << "\t";
+    std::cout << ptr->_data << "\t";
   }
   std::cout << std::endl;
 }
@@ -167,7 +169,7 @@ template <typename T>
 ListNodePosi(T) List<T>::Find(const T &e, int size, ListNodePosi(T) ptr) const {
   while (0 < size--) {
     ptr = ptr->_pred;
-    if (ptr->data == e)
+    if (ptr->_data == e)
       return ptr;
   }
   return nullptr;
@@ -178,7 +180,7 @@ int List<T>::Deduplicate() {
   int old_size = _size;
   ListNodePosi(T) ptr = First();
   for (Rank r = 0; ptr != _trailer; ptr = ptr->_succ){
-    if (ListNodePosi(T) q = Find(ptr->data, r, ptr))
+    if (ListNodePosi(T) q = Find(ptr->_data, r, ptr))
       Remove(q);
     else
       ++r;
@@ -195,7 +197,7 @@ int List<T>::Uniquify() {
   ListNodePosi(T) ptr = First();
   ListNodePosi(T) ptr_succ = ptr->_succ;
   while (_trailer != ptr_succ) {
-    if (ptr->data != ptr_succ->data) {
+    if (ptr->_data != ptr_succ->_data) {
       ptr = ptr_succ;
     }
     else 
@@ -213,7 +215,7 @@ List<T>::List(const List<T> &list) {
 template <typename T>
 ListNodePosi(T) List<T>::Search(const T &e, int n, ListNodePosi(T) p) const {
   while ((0 < n--) && (p = p->_pred)) {
-    if (e >= p->data)
+    if (e >= p->_data)
       break;
   }
   return p;
@@ -237,11 +239,22 @@ template <typename T>
 ListNodePosi(T) List<T>::SelectMax(ListNodePosi(T) ptr, int n) const {
   ListNodePosi(T) max = ptr;
   while (0 < n--) {
-    if ( (ptr = ptr->_succ)->data >= (max->data) ) 
+    if ( (ptr = ptr->_succ)->_data >= (max->_data) ) 
       max = ptr;  // stable sort, due to >=
   }
   return max;
 }
+
+template <typename T>
+void List<T>::InsertionSort(ListNodePosi(T) ptr, int n) {
+  for (int i = 0; i < n; ++i) {
+    // input sensitive, 0 when ordered, O(n) when reverse
+    InsertAfter(Search(ptr->_data, i, ptr), ptr->_data);
+    ptr = ptr->_succ;
+    Remove(ptr->_pred);
+  }
+}
+
 
 }  // namespace mydatastructure
 
