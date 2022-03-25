@@ -136,6 +136,7 @@ int main() {
   // List<T>::Search
   std::cout << list.Search(2)->data << std::endl;
   list.InsertAsFirst(10);
+  list.InsertAsFirst(5);
   list.Tranverse();
   //TODO  List<T>::SelectionSort 
   list.SelectionSort();

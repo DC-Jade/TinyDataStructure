@@ -225,19 +225,20 @@ void List<T>::SelectionSort(ListNodePosi(T) ptr, int n){
   ListNodePosi(T) head = ptr->_pred;
   ListNodePosi(T) tail = ptr;
   for (Rank i = 0; i < n; ++i)
-    tail = tail->_succ;
-  while (0 < --n) {
+    tail = tail->_succ;  // 
+  while (0 < n--) {
     InsertBefore(tail, Remove(SelectMax(head->_succ, n)));
     tail = tail->_pred;
   }
 }
 
+// assert: ptr in [First(), Last()], n in [1,_size]
 template <typename T>
 ListNodePosi(T) List<T>::SelectMax(ListNodePosi(T) ptr, int n) const {
   ListNodePosi(T) max = ptr;
   while (0 < n--) {
-    if ( (ptr = ptr->_succ)->data > (max->data) )
-      max = ptr;
+    if ( (ptr = ptr->_succ)->data >= (max->data) ) 
+      max = ptr;  // stable sort, due to >=
   }
   return max;
 }
