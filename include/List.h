@@ -225,7 +225,7 @@ void List<T>::SelectionSort(ListNodePosi(T) ptr, int n){
   ListNodePosi(T) head = ptr->_pred;
   ListNodePosi(T) tail = ptr;
   for (Rank i = 0; i < n; ++i)
-    tail = tail->_succ;  // 
+    tail = tail->_succ;  // sort interval (head, tail)
   while (0 < n--) {
     InsertBefore(tail, Remove(SelectMax(head->_succ, n)));
     tail = tail->_pred;
