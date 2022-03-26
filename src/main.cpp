@@ -21,7 +21,6 @@ int main() {
   /* 
   @ Vector<T> test
   */
- /*
   Vector<int> iv(10);
   Vector<int> iv_ordered(10);
   //Vector<int> iv1(iv);
@@ -36,12 +35,12 @@ int main() {
   }
   iv.Tranverse();
   std::cout << std::endl;
-  std::cout << "size before Insertion: " << iv.GetSize() << std::endl;
-  std::cout << "capacity before expanding: " << iv.GetCapacity()
+  std::cout << "size before Insertion: " << iv.Size() << std::endl;
+  std::cout << "capacity before expanding: " << iv.Capacity()
             << std::endl;
   iv.Insert(1, 10);
-  std::cout << "size after Insertion: " << iv.GetSize() << std::endl;
-  std::cout << "capacity after expanding: " << iv.GetCapacity()
+  std::cout << "size after Insertion: " << iv.Size() << std::endl;
+  std::cout << "capacity after expanding: " << iv.Capacity()
             << std::endl;
   iv.Tranverse();
   
@@ -72,16 +71,16 @@ int main() {
   iv_ordered.Tranverse();
   std::cout << "Search(2): " << iv_ordered.Search(2) << std::endl;
 
-  // swap
+  // Swap
   int iv0 = iv[0];
   int iv9 = iv[10];
-  swap(iv[0], iv[10]);
+  mydatastructure::Swap(iv[0], iv[10]);
   iv0 = iv[0];
   iv9 = iv[10];
   
   // BubbleSort
   //iv.Tranverse();
-  std::cout << "iv.size: " << iv.GetSize() << std::endl; 
+  std::cout << "iv.size: " << iv.Size() << std::endl; 
   std::cout << "unSorted: ";
   iv.Tranverse();
   iv.BubbleSort(0, 10);
@@ -90,14 +89,13 @@ int main() {
 
   // MergeSort
   iv.Insert(5, 8);
-  std::cout << "iv.size: " << iv.GetSize() << std::endl; 
+  std::cout << "iv.size: " << iv.Size() << std::endl; 
   std::cout << "unSorted: ";
   iv.Tranverse();
   iv.MergeSort(3,7);
   iv.MergeSort();
   std::cout << "Sorted: ";
   iv.Tranverse();
-  */
 
   /*
   @ List<T> test
