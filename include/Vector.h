@@ -90,6 +90,7 @@ Vector<T>::Vector(const Vector<T> &vec) {
 
 template <typename T>
 Vector<T>::~Vector(){
+  delete[] _elem;
   std::cout << "deconstructor of Vector" << std::endl;
 }
 
