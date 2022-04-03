@@ -3,12 +3,14 @@
 #include "../include/List.h"
 #include "../include/Stack.h"
 #include "../include/Queue.h"
+#include "../include/BinTree.h"
 
-using mydatastructure::Vector;
+using mydatastructure::BinTree;
 using mydatastructure::List;
 using mydatastructure::ListNode;
-using mydatastructure::Stack;
 using mydatastructure::Queue;
+using mydatastructure::Stack;
+using mydatastructure::Vector;
 
 void Tranverse(Vector<int>& vec) {
   int vec_size = vec.Size();
@@ -21,6 +23,7 @@ int main() {
   /* 
   @ Vector<T> test
   */
+  /*
   Vector<int> iv(10);
   Vector<int> iv_ordered(10);
   //Vector<int> iv1(iv);
@@ -96,6 +99,7 @@ int main() {
   iv.MergeSort();
   std::cout << "Sorted: ";
   iv.Tranverse();
+  */
 
   /*
   @ List<T> test
@@ -176,10 +180,22 @@ int main() {
   /*
   @ Queue<T>
   */
+  /*
   Queue<int> queue;
   queue.Enqueue(2);
   queue.Enqueue(1);
   std::cout << queue.Front() << std::endl;
   std::cout << queue.Dequeue() << std::endl;
   std::cout << queue.Size() << std::endl;
+  */
+
+  /*
+  @ BinTree<T>
+  */
+  BinTree<int> unordered_bintree;
+  std::cout << (unordered_bintree.Empty() ? "bintree empty" 
+                                          : "bintree not empty");
+  int tmp = 2;
+  unordered_bintree.Insert(tmp, unordered_bintree.Root());
+  std::cout << unordered_bintree.Root()->_data;
 }
