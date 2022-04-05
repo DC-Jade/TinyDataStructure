@@ -1,16 +1,20 @@
 #include <iostream>
+#include <stdio.h>
+
 #include "../include/Vector.h"
 #include "../include/List.h"
 #include "../include/Stack.h"
 #include "../include/Queue.h"
 #include "../include/BinTree.h"
 
+using mydatastructure::BinNode;
 using mydatastructure::BinTree;
 using mydatastructure::List;
 using mydatastructure::ListNode;
 using mydatastructure::Queue;
 using mydatastructure::Stack;
 using mydatastructure::Vector;
+using std::printf;
 
 void Tranverse(Vector<int>& vec) {
   int vec_size = vec.Size();
@@ -190,12 +194,39 @@ int main() {
   */
 
   /*
+  @ BinNode<T>
+  */
+  /*
+  BinNode<int> bin_node_parent = 0;
+  printf("bin_node_parent._data: %d\n",bin_node_parent._data);
+  bin_node_parent.InsertAsLc(1);
+  bin_node_parent.InsertAsRc(2);
+  printf("bin_node_parent._lc->data: %d\n", bin_node_parent._lc->_data);
+  printf("bin_node_parent._rc->data: %d\n", bin_node_parent._rc->_data);
+  bin_node_parent._lc->InsertAsLc(3);
+  bin_node_parent._lc->_lc->InsertAsLc(4);
+  printf("bin_node_parent.Size(): %d\n", bin_node_parent.Size());
+  printf("bin_node_parent._lc->Size(): %d\n", bin_node_parent._lc->Size());
+  printf("bin_node_parent._rc->Size(): %d\n", bin_node_parent._rc->Size());
+  */
+
+  /*
   @ BinTree<T>
   */
-  BinTree<int> unordered_bintree;
-  std::cout << (unordered_bintree.Empty() ? "bintree empty" 
+  // BinTree<T>::Insert()
+  BinTree<int>
+      unordered_bintree;
+  std::cout << (unordered_bintree.Empty() ? "bintree empty"
                                           : "bintree not empty");
-  int tmp = 2;
-  unordered_bintree.Insert(tmp, unordered_bintree.Root());
-  std::cout << unordered_bintree.Root()->_data;
+  std::cout << std::endl;
+  unordered_bintree.InsertAsRoot(2);
+  unordered_bintree.Insert(3, unordered_bintree.Root());
+  printf("unordered_bintree._root->data: %d\n",
+    unordered_bintree.Root()->_data);
+  printf("unordered_bintree._root->Size(): %d\n",
+    unordered_bintree.Root()->_data);
+  printf("unordered_bintree._root->_lc->_data: %d\n",
+    unordered_bintree.Root()->_lc->_data);
+  
+  
 }
