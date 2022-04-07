@@ -59,6 +59,22 @@ int BinNode<T>::Size() {
     s += _rc->Size();
   return s;
 }
+
+template <typename T>
+BinNodePosi(T) BinNode<T>::Succ() {
+  BinNodePosi(T) ptr = this;
+  if (this->_rc) {
+    ptr = this->_rc;
+    while (HasLChild(*ptr))
+      ptr = ptr->_lc;
+  } else {
+    while (IsRChild(*ptr))
+      ptr = ptr->_parent;
+    ptr = ptr->_parent;
+  }
+  return ptr;
+}
+
 }  // namespace mydatastructure
 
 #endif

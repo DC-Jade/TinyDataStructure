@@ -2,11 +2,33 @@
 #define INCLUDE_BINTREE_H
 
 #include "../include/BinNode.h"
+#include <stack>
+#include <queue>
+#include <iostream>
+//#include <stdio.h>
 
 namespace mydatastructure {
 
 #define FromParentTo(x) \
 ( IsRoot(x) ? _root : ( IsLChild(x) ? (x)._parent->_lc : (x)._parent->_rc ) )
+
+template <typename T>
+class VST {
+public:
+  virtual void operator()(T data) {
+    std::cout << data << "\t";
+  }
+}; // class VST, function object
+
+/*
+template <typename T>
+class Print : public VST<T> {
+public:
+  void operator() (T data) {
+    std::cout << data;
+  }
+};  // class Print, function class
+*/
 
 template <typename T>
 class BinTree {
@@ -44,6 +66,8 @@ void Release(BinNodePosi(T) x) {
 
 
 // BinNode status judgement
+//namespace binnodestatus {
+
 template <typename T>
 inline bool IsRoot(const BinNode<T> bin_node) {
   return !(bin_node._parent);
@@ -66,12 +90,12 @@ inline bool HasParent(const BinNode<T> bin_node) {
 
 template <typename T>
 inline bool HasLChild(const BinNode<T> bin_node) {
-  return (&bin_node && bin_node._lc);
+  return (bin_node._lc);
 }
 
 template <typename T>
 inline bool HasRChild(const BinNode<T> bin_node) {
-  return (&bin_node && bin_node._rc);
+  return (bin_node._rc);
 }
 
 template <typename T>
@@ -98,6 +122,8 @@ template <typename T>
 inline BinNodePosi(T) Uncle(const BinNodePosi(T) ptr) {
   return (Sibling(ptr->_parent));
 }
+
+//}  // namespace mydatastructure::binnodestatus
 
 /* TODO: replace macro with inline function
 template <typename T>
@@ -195,6 +221,120 @@ BinTree<T>* BinTree<T>::Secede(BinNodePosi(T) x) {
   _size -= subtree->_size;
   return subtree;
 }
+
+/* Traverse based on recursive*/
+
+template <typename T, typename VST>
+void TraversePreRecursive(BinNodePosi(T) ptr, VST &visit) {
+  if (!ptr) return;
+  visit(ptr->data);
+  TraversePreRecursive(ptr->_lc, visit);
+  TraversePreRecursive(ptr->_rc, visit);
+}
+
+template <typename T, typename VST>
+void TraversePostRecursive(BinNodePosi(T) ptr, VST &visit) {
+  if (!ptr) return;
+  TraversePostRecursive(ptr->_lc, visit);
+  TraversePostRecursive(ptr->_rc, visit);
+  visit(ptr->_data);
+}
+
+template <typename T, typename VST>
+void TraverseInRecursive(BinNodePosi(T) ptr, VST &visit) {
+  if (!ptr) return;
+  TraverseInRecursive(ptr->_lc, visit);
+  visit(ptr->_data);
+  TraverseInRecursive(ptr->_rc, visit);
+}
+
+/* Traverse based on iteration */
+template <typename T, typename VST>
+void VisitAlongLeftBranch(BinNodePosi(T) ptr, VST &visit,
+  std::stack<BinNodePosi(T)> &stack) {
+  while (ptr) {
+    visit(ptr->_data);
+    stack.push(ptr->_rc);
+    ptr = ptr->_lc;
+  }
+}
+
+template <typename T, typename VST>
+void TraversePreIteration(BinNodePosi(T) ptr, VST &visit) {
+  std::stack<BinNodePosi(T)> stack;
+  while (true) {
+    VisitAlongLeftBranch(ptr, visit, stack);
+    if (stack.empty())
+      break;
+    ptr = stack.top();
+    stack.pop();
+  }
+}
+
+template <typename T>
+void GoAlongLeftBranch(BinNodePosi(T) ptr, std::stack<BinNodePosi(T)> &stack) {
+  while (ptr) {
+    stack.push(ptr);
+    ptr = ptr->_lc;
+  }
+}
+
+template <typename T, typename VST>
+void TraverseInIteration(BinNodePosi(T) ptr, VST &visit) {
+  std::stack<BinNodePosi(T)> stack;
+  while (true) {
+    GoAlongLeftBranch(ptr, stack);
+    if (stack.empty()) break;
+    ptr = stack.top();
+    visit(ptr->_data);
+    stack.pop();
+    ptr = ptr->_rc;
+  }
+}
+
+template <typename T>
+void GoToHLVFL(std::stack<BinNodePosi(T)> &stack) {
+  while (BinNodePosi(T) ptr = stack.top()) {
+    if (HasLChild(*ptr)) {
+      if(HasRChild(*ptr))
+        stack.push(ptr->_rc);
+      stack.push(ptr->_lc);
+    } else {
+      stack.push(ptr->_rc);
+    }
+  }
+  stack.pop();
+}
+
+template <typename T, typename VST>
+void TraversePostIteration(BinNodePosi(T) ptr, VST &visit) {
+  std::stack<BinNodePosi(T)> stack;
+  if (ptr)
+    stack.push(ptr);
+  while (!stack.empty()) {
+    if (stack.top() != ptr->_parent)
+      GoToHLVFL(stack);
+    ptr = stack.top();
+    stack.pop();
+    visit(ptr->_data);
+  }
+}
+
+template <typename T> template <typename VST>
+void BinNode<T>::TraverseLevel(VST &visit) {
+  std::queue<BinNodePosi(T)> queue;
+  queue.push(this);
+  while (!queue.empty()) {
+    BinNodePosi(T) ptr = queue.front();
+    queue.pop();
+    visit(ptr->_data);
+    if (HasLChild(*ptr))
+      queue.push(ptr->_lc);
+    if (HasRChild(*ptr))
+      queue.push(ptr->_rc);
+  }
+}
+
 
 } // namespace mydatastructure
 

@@ -11,9 +11,13 @@ using mydatastructure::BinNode;
 using mydatastructure::BinTree;
 using mydatastructure::List;
 using mydatastructure::ListNode;
+//using mydatastructure::Print;
 using mydatastructure::Queue;
 using mydatastructure::Stack;
+using mydatastructure::TraverseInRecursive;
+using mydatastructure::TraversePreIteration;
 using mydatastructure::Vector;
+using mydatastructure::VST;
 using std::printf;
 
 void Tranverse(Vector<int>& vec) {
@@ -219,14 +223,43 @@ int main() {
   std::cout << (unordered_bintree.Empty() ? "bintree empty"
                                           : "bintree not empty");
   std::cout << std::endl;
-  unordered_bintree.InsertAsRoot(2);
-  unordered_bintree.Insert(3, unordered_bintree.Root());
+  unordered_bintree.InsertAsRoot(0);
+  unordered_bintree.Insert(1, unordered_bintree.Root());
+  unordered_bintree.Insert(unordered_bintree.Root(), 3);
+  unordered_bintree.Insert(2, unordered_bintree.Root()->_lc);
+  unordered_bintree.Insert(unordered_bintree.Root()->_rc, 4);
+  unordered_bintree.Insert(unordered_bintree.Root()->_rc->_rc, 5);
+
   printf("unordered_bintree._root->data: %d\n",
     unordered_bintree.Root()->_data);
   printf("unordered_bintree._root->Size(): %d\n",
-    unordered_bintree.Root()->_data);
+    unordered_bintree.Root()->Size());
   printf("unordered_bintree._root->_lc->_data: %d\n",
     unordered_bintree.Root()->_lc->_data);
+  printf("unordered_bintree._root->_rc->_data: %d\n",
+    unordered_bintree.Root()->_rc->_data);
   
+  // binnodestatus::
+  if (mydatastructure::IsRoot(*unordered_bintree.Root()))
+    printf("%s\n", "is root");
+  else
+    printf("%s\n", "not root");
+  if (mydatastructure::HasLChild(*unordered_bintree.Root()))
+    printf("%s\n", "have left child");
+  else
+    printf("%s\n", "not have left child");
+  if (mydatastructure::HasRChild(*unordered_bintree.Root()))
+    printf("%s\n", "have right child");
+  else
+    printf("%s\n", "not have right child");
   
+  // BinTree<T>::Traverse
+  VST<int> visit;
+  TraversePreIteration(unordered_bintree.Root(), visit);
+  std::cout << std::endl;
+  mydatastructure::TraverseInIteration(unordered_bintree.Root(), visit);
+  std::cout << std::endl;
+  mydatastructure::TraversePostIteration(unordered_bintree.Root(), visit);
+  std::cout << std::endl;
+  unordered_bintree.Root()->TraverseLevel(visit);
 }
