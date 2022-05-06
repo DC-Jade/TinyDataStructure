@@ -30,3 +30,17 @@ $ git clone git@github.com:DC-Jade/TinyDataStructure.git
 ```bash
 $ cmake ./ && make && ./bin/main.o
 ```
+
+## BitMap
+
+```C
+/* k >> 3 refers to the index of k in array */
+/* k & 0x07 equal to k % 8 */
+/* 1 << (k & 0x07) refers to index in a char(8 bits) */
+void Set(int k)   { Expand(k); _M[k >> 3] |= (1 << (k & 0x07)); }
+void Clear(int k) { Expand(k); _M[k >> 3] &= ~(1 << (k & 0x07)); }
+bool Test(int k)  { Expand(k); return _M[k >> 3] & (1 << (k & 0x07)); }
+```
+
+
+
