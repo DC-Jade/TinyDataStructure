@@ -1,19 +1,24 @@
 #include <iostream>
 #include <stdio.h>
 
+
 #include "../include/Vector.h"
 #include "../include/List.h"
 #include "../include/Stack.h"
 #include "../include/Queue.h"
 #include "../include/BinTree.h"
+#include "../include/Entry.h"
+#include "../include/BinarySearchTree.h"
 
 using mydatastructure::BinNode;
 using mydatastructure::BinTree;
+using mydatastructure::BST;
+using mydatastructure::Entry;
 using mydatastructure::List;
 using mydatastructure::ListNode;
-//using mydatastructure::Print;
 using mydatastructure::Queue;
 using mydatastructure::Stack;
+using mydatastructure::TraverseInIteration;
 using mydatastructure::TraverseInRecursive;
 using mydatastructure::TraversePreIteration;
 using mydatastructure::Vector;
@@ -25,6 +30,21 @@ void Tranverse(Vector<int>& vec) {
   for (int i = 0; i < vec_size; ++i) {
     std::cout << vec[i] << "\t";
   }
+}
+
+
+void BstBuild(BST<int> &bst) {
+  bst.InsertAsRoot(45);
+  bst.Insert(10);
+  bst.Insert(20);
+  /*
+  bst.Insert(15, bst.Root());
+  bst.Insert(bst.Root(), 79);
+  bst.Insert(10, bst.Root()->_lc);
+  bst.Insert(bst.Root()->_lc, 20);
+  bst.Insert(55, bst.Root()->_rc);
+  bst.Insert(bst.Root()->_rc, 90);
+  */
 }
 
 int main() {
@@ -217,6 +237,7 @@ int main() {
   /*
   @ BinTree<T>
   */
+  /*
   // BinTree<T>::Insert()
   BinTree<int>
       unordered_bintree;
@@ -262,4 +283,29 @@ int main() {
   mydatastructure::TraversePostIteration(unordered_bintree.Root(), visit);
   std::cout << std::endl;
   unordered_bintree.Root()->TraverseLevel(visit);
+  */
+
+  /*
+  @ Entry<K, V>
+  */
+  /*
+  Entry<int, int> entry;
+  printf("entry._key: %d", entry._key);
+  */
+
+  /*
+  @ BST<T>
+  */
+  // BSTBulid<T>
+  VST<int> visit;
+  BST<int> bst;
+  BstBuild(bst);
+  //mydatastructure::BSTBulid<int>(bst, 8, 10);
+  printf("bst.Size(): %d\n", bst.Size());
+  TraverseInIteration(bst.Root(), visit);
+  printf("\n");
+
+  //std::cout << bst.Root()->_data << std::endl;
+  //std::cout << bst.Root()->_lc->_data << std::endl;
+  //std::cout << bst.Root()->_lc->_rc->_data << std::endl;
 }
