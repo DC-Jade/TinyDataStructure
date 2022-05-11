@@ -1,5 +1,5 @@
 # TinyDataStructure
-## Intrucduction
+## Introduction
 - This is a datastructure learning notebook
 
 - Ref: \
