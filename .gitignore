@@ -39,3 +39,6 @@ CMakeFiles/
 
 # test code
 src/test*
+
+# debug README
+README_debug.**
