@@ -1,10 +1,10 @@
 #ifndef INCLUDE_SKIPLIST_H
 #define INCLUDE_SKIPLIST_H
 
-#include "../include/List.h"
-#include "../include/Dictionary.h"
-#include "../include/Entry.h"
-#include "../include/QuadList.h"
+#include "../include/List.hpp"
+#include "../include/Dictionary.hpp"
+#include "../include/Entry.hpp"
+#include "../include/QuadList.hpp"
 
 namespace mydatastructure {
 

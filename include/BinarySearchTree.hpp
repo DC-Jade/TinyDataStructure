@@ -1,4 +1,4 @@
-#include "../include/BinTree.h"
+#include "../include/BinTree.hpp"
 
 namespace mydatastructure {
 

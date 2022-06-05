@@ -216,7 +216,7 @@ int Vector<T>::Uniquify() {
 template <typename T>
 Rank Vector<T>::Search(
   const T& e, Rank lo, Rank hi ) const {
-  binSearch(_elem, e, lo, hi);
+  return binSearch(_elem, e, lo, hi);
 }
 
 template <typename T>

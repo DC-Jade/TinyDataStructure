@@ -1,7 +1,7 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include "../include/ListNode.h"
+#include "../include/ListNode.hpp"
 #include <iostream>
 
 namespace mydatastructure {
@@ -291,3 +291,4 @@ ListNodePosi(T) List<T>::Merge(ListNodePosi(T) p, int n,
 
 }  // namespace mydatastructure
 
+#endif
