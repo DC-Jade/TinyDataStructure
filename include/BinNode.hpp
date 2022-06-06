@@ -47,18 +47,25 @@ BinNode<T>::BinNode() :
 	_parent(nullptr), _lc(nullptr), _rc(nullptr),
 	_height(0), _npl(0), _color(RB_RED) { }
 
+// template <typename T>
+// BinNode<T>::BinNode(T e, BinNodePosi(T) parent = nullptr,
+//   BinNodePosi(T) lc = nullptr, BinNodePosi(T) rc = nullptr,
+//   int height = 0, int npl = 1, RBColor color = RB_RED) : _data(e) { }
+
 template <typename T>
 BinNode<T>::BinNode(T e, BinNodePosi(T) parent, BinNodePosi(T) lc,
-	BinNodePosi(T) rc, int height, int npl, RBColor color) : _data(e) { } 
+	BinNodePosi(T) rc, int height, int npl, RBColor color) :
+	_data(e), _parent(parent), _lc(lc), _rc(rc), _height(height),
+	_npl(npl), _color(color) { } 
 
 template <typename T>
 BinNodePosi(T) BinNode<T>::InsertAsLC(const T &e) {
-	return _lc = new BinNode(e, _parent = this);
+	return _lc = new BinNode(e, this);
 } 
 
 template <typename T>
 BinNodePosi(T) BinNode<T>::InsertAsRC(const T &e) {
-	return _rc = new BinNode(e, _parent = this);
+	return _rc = new BinNode(e, this);
 } 
 
 // template <typename T>
@@ -73,7 +80,7 @@ inline int Sature(const BinNodePosi(T) p) {
 template <typename T> 
 bool IsRoot(const BinNode<T> &rbin_node) {
 	/* rbin_node reference to a bin_node */
-	return rbin_node._parent;
+	return !(rbin_node._parent);
 }
 
 template <typename T>
@@ -113,10 +120,27 @@ bool HasBothChild(const BinNode<T> &rbin_node) {
 
 template <typename T>
 bool IsLeaf(const BinNode<T> &rbin_node) {
-	return (bool) rbin_node._height;
+	/* cannot use height == 0, due to InsertAsLC do not update height */
+	// return (bool) !(rbin_node._height);
 	/* another method */
-	// return HasChild(rbin_node);
+	return !HasChild(rbin_node);
 }
+
+template <typename T>
+BinNodePosi(T) Sibling(const BinNode<T> &rbin_node) {
+	return IsLChild(rbin_node) ? rbin_node._parent->_rc : rbin_node._parent->_lc;
+}
+
+template <typename T>
+BinNodePosi(T) Uncle(const BinNode<T> &rbin_node) {
+	Sibling(*(rbin_node._parent));
+}
+
+// template <typename T>
+// BinNodePosi(T) FromParentTo(const BinNode<T> &rbin_node) {
+//   return IsRoot(rbin_node) ? _root :
+//     (IsLChild(rbin_node) ? rbin_node._parent->_lc : rbin_node._parent->_rc);
+// }
 
 }	/* namespace mydatastructure */
 

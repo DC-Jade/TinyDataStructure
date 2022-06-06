@@ -31,21 +31,6 @@ void Tranverse(Vector<int>& vec) {
   }
 }
 
-
-// void BstBuild(BST<int> &bst) {
-//   bst.InsertAsRoot(45);
-//   bst.Insert(10);
-//   bst.Insert(20);
-//   [>
-//   bst.Insert(15, bst.Root());
-//   bst.Insert(bst.Root(), 79);
-//   bst.Insert(10, bst.Root()->_lc);
-//   bst.Insert(bst.Root()->_lc, 20);
-//   bst.Insert(55, bst.Root()->_rc);
-//   bst.Insert(bst.Root()->_rc, 90);
-//   */
-// }
-//
 void TestBinNode() {
 	BinNode<int> bin_node = 2;
 	BinNode<int> bin_node_two;
@@ -60,6 +45,20 @@ void TestBinNode() {
 	HasRChild(bin_node) ?  printf("RChild = %d\n", bin_node._rc->_data) : 
 		printf("RChild not exist\n");
 	HasChild(bin_node) ?  printf("Child exist\n") : printf("Child not exist\n");
+
+	/* BinNode status */
+	IsRoot(bin_node) ? printf("bin_node is Root\n") :
+		printf("bin_node is not Root\n");
+	IsLeaf(bin_node) ? printf("bin_node is Leaf\n") :
+		printf("bin_node is not Leaf\n");
+	IsRoot(*(bin_node._lc)) ? printf("bin_node._lc is Root\n") :
+		printf("bin_node._lc is not Root\n");
+	IsLeaf(*(bin_node._lc)) ? printf("bin_node._lc is Leaf\n") :
+		printf("bin_node._lc is not Leaf\n");
+	IsRoot(*(bin_node._rc)) ? printf("bin_node._rc is Root\n") :
+		printf("bin_node._rc is not Root\n");
+	IsLeaf(*(bin_node._rc)) ? printf("bin_node._rc is Leaf\n") :
+		printf("bin_node._rc is not Leaf\n");
 }
 
 int main() {
