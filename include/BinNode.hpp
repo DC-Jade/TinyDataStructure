@@ -28,6 +28,7 @@ public:
 	void TravelIn(VST &visit);
 	template <typename VST>
 	void TravelPost(VST &visit);
+
 	bool operator==(const BinNode &bin_node);
 	bool operator<(const BinNode &bin_node);
 	bool operator>(const BinNode &bin_node);
@@ -60,13 +61,24 @@ BinNode<T>::BinNode(T e, BinNodePosi(T) parent, BinNodePosi(T) lc,
 
 template <typename T>
 BinNodePosi(T) BinNode<T>::InsertAsLC(const T &e) {
-	return _lc = new BinNode(e, this);
+	return _lc = new BinNode<T>(e, this);
 } 
 
 template <typename T>
 BinNodePosi(T) BinNode<T>::InsertAsRC(const T &e) {
-	return _rc = new BinNode(e, this);
+	return _rc = new BinNode<T>(e, this);
 } 
+
+// template <typename T, typename VST>
+// void BinNode<T>::TravelIn(VST &visit) {
+	// switch(rand() % 1 + 1) {
+		// case 1: TravelInIterationOne(this, visit); break;
+		// case 2: TravelInIterationTwo(this, visit); break;
+		// case 3: TravelInIterationThree(this, visit); break;
+		// case 4: TravelInIterationFour(this, visit); break;
+		// default: TravelInRecusion(this, visit); break;
+	// }
+// }
 
 // template <typename T>
 // int BinNode<T>::Size() {}

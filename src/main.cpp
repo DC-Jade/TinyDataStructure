@@ -4,13 +4,13 @@
 #include "../include/List.hpp"
 #include "../include/Stack.hpp"
 #include "../include/Queue.hpp"
-// #include "../include/BinTree.hpp"
+#include "../include/BinTree.hpp"
 #include "../include/BinNode.hpp"
 #include "../include/Entry.hpp"
 // #include "../include/BinarySearchTree.hpp"
 
 using mydatastructure::BinNode;
-// using mydatastructure::BinTree;
+using mydatastructure::BinTree;
 // using mydatastructure::BST;
 using mydatastructure::Entry;
 using mydatastructure::List;
@@ -59,6 +59,11 @@ void TestBinNode() {
 		printf("bin_node._rc is not Root\n");
 	IsLeaf(*(bin_node._rc)) ? printf("bin_node._rc is Leaf\n") :
 		printf("bin_node._rc is not Leaf\n");
+}
+
+void TestBinTree() {
+	BinTree<int> bin_tree;
+	printf("bin_tree._size = %d\n", bin_tree.Size());
 }
 
 int main() {
