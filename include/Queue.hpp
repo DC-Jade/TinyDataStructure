@@ -1,3 +1,6 @@
+#ifndef INCLUDE_QUEUE_H
+#define INCLUDE_QUEUE_H
+
 #include "../include/List.hpp"
 
 namespace mydatastructure {
@@ -23,4 +26,7 @@ template <typename T>
 T& Queue<T>::Front() {
   return this->First()->_data;
 }
-} // namespace mydatastructure
+
+}	/* namespace mydatastructure */
+
+#endif

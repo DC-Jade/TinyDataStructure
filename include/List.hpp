@@ -11,7 +11,7 @@ class List {
 public:
   List() { 
     Init();
-    std::cout << "default constructor" << std::endl;
+    std::cout << "default List constructor" << std::endl;
   }
   List(const List<T> &list);
   List(const List<T> &list, Rank r, int n);
@@ -140,7 +140,7 @@ List<T>::~List() {
   Clear();
   delete _header;
   delete _trailer;
-  std::cout << "deconstructor" << std::endl;
+  std::cout << "\nList deconstructor" << std::endl;
 }
 
 template <typename T>

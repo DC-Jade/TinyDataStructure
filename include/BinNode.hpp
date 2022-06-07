@@ -1,6 +1,8 @@
 #ifndef INCLUDE_BINNODE_H
 #define INCLUDE_BINNODE_H
 
+#include "../include/Queue.hpp"
+
 namespace mydatastructure {
 #define BinNodePosi(T) BinNode<T>*
 
@@ -23,7 +25,7 @@ public:
 	template <typename VST>
 	void TravelLevel(VST &visit);
 	template <typename VST>
-	void TraverlPre(VST &visit);
+	void TravelPre(VST &visit);
 	template <typename VST>
 	void TravelIn(VST &visit);
 	template <typename VST>
@@ -69,6 +71,27 @@ BinNodePosi(T) BinNode<T>::InsertAsRC(const T &e) {
 	return _rc = new BinNode<T>(e, this);
 } 
 
+template <typename T> template <typename VST>
+void BinNode<T>::TravelLevel(VST &visit) {
+	Queue<BinNodePosi(T)> q_pbn;
+	q_pbn.Enqueue(this);
+	BinNodePosi(T) pbn;
+	while (!q_pbn.Empty()) {
+		pbn = q_pbn.Dequeue();
+		visit(pbn->_data);
+		if (HasLChild(*pbn)) { q_pbn.Enqueue(pbn->_lc); }
+		if (HasRChild(*pbn)) { q_pbn.Enqueue(pbn->_rc); }
+	}
+}
+
+template <typename T> template <typename VST>
+void BinNode<T>::TravelPre(VST &visit) {
+	switch (rand() % 1) {
+		default: TravelPreRecursion(this, visit); break;
+	}
+}
+
+
 // template <typename T, typename VST>
 // void BinNode<T>::TravelIn(VST &visit) {
 	// switch(rand() % 1 + 1) {
@@ -86,7 +109,7 @@ BinNodePosi(T) BinNode<T>::InsertAsRC(const T &e) {
 /* non function member */
 template <typename T>
 inline int Sature(const BinNodePosi(T) p) {
-	return (p) ? p->height : -1;
+	return (p) ? p->_height : -1;
 }
 
 template <typename T> 
@@ -146,6 +169,14 @@ BinNodePosi(T) Sibling(const BinNode<T> &rbin_node) {
 template <typename T>
 BinNodePosi(T) Uncle(const BinNode<T> &rbin_node) {
 	Sibling(*(rbin_node._parent));
+}
+
+template <typename T, typename VST>
+void TravelPreRecursion(BinNodePosi(T) pbin_node, VST &visit) {
+	if (!pbin_node) return;
+	visit(pbin_node->_data);
+	TravelPreRecursion(pbin_node->_lc, visit);
+	TravelPreRecursion(pbin_node->_rc, visit);
 }
 
 // template <typename T>

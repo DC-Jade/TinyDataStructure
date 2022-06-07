@@ -21,6 +21,7 @@ using mydatastructure::Stack;
 // using mydatastructure::TraverseInRecursive;
 // using mydatastructure::TraversePreIteration;
 using mydatastructure::Vector;
+using mydatastructure::VST;
 // using mydatastructure::VST;
 using std::printf;
 
@@ -63,9 +64,31 @@ void TestBinNode() {
 
 void TestBinTree() {
 	BinTree<int> bin_tree;
-	printf("bin_tree._size = %d\n", bin_tree.Size());
+	bin_tree.InsertAsRoot(10);
+	bin_tree.InsertAsLC(bin_tree.Root(), 9);
+	bin_tree.InsertAsRC(bin_tree.Root(), 11);
+	bin_tree.InsertAsRC(bin_tree.Root()->_lc, 8);
+	printf("%p\n", bin_tree.Root());
+	printf("Before bin_tree._size = %d\n", bin_tree.Size());
+
+	// bin_tree.Remove(bin_tree.Root());
+	// printf("After bin_tree._size = %d\n", bin_tree.Size());
+
+	BinTree<int> sub_tree;
+	sub_tree.InsertAsRoot(20);
+	sub_tree.InsertAsLC(sub_tree.Root(), 19);
+	sub_tree.InsertAsRC(sub_tree.Root(), 21);
+	BinTree<int> *ptree = &sub_tree;
+	bin_tree.AttachAsRC(bin_tree.Root()->_rc, &ptree);
+	// bin_tree.AttachAsRC(bin_tree.Root()->_rc, &&sub_tree);
+	printf("After bin_tree._size = %d\n", bin_tree.Size());
+	VST<int> visit;
+	bin_tree.TravelLevel(visit);
+	bin_tree.TravelPre(visit);
+	printf("\n");
 }
 
 int main() {
-	TestBinNode();
+	// TestBinNode();
+	TestBinTree();
 }
