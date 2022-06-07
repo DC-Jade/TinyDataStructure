@@ -87,10 +87,29 @@ void BinNode<T>::TravelLevel(VST &visit) {
 template <typename T> template <typename VST>
 void BinNode<T>::TravelPre(VST &visit) {
 	switch (rand() % 1) {
-		default: TravelPreRecursion(this, visit); break;
+		default:
+			printf("TravelPreRecursion\n"); TravelPreRecursion(this, visit); break;
 	}
+	printf("\n");
 }
 
+template <typename T> template <typename VST>
+void BinNode<T>::TravelPost(VST &visit) {
+	switch (rand() % 1) {
+		default: 
+			printf("TravelPostRecursion\n"); TravelPostRecursion(this, visit); break;
+	}
+	printf("\n");
+}
+
+template <typename T> template <typename VST>
+void BinNode<T>::TravelIn(VST &visit) {
+	switch (rand() % 1) {
+		default: 
+			printf("TravelInRecursion\n"); TravelInRecursion(this, visit); break;
+	}
+	printf("\n");
+}
 
 // template <typename T, typename VST>
 // void BinNode<T>::TravelIn(VST &visit) {
@@ -177,6 +196,22 @@ void TravelPreRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 	visit(pbin_node->_data);
 	TravelPreRecursion(pbin_node->_lc, visit);
 	TravelPreRecursion(pbin_node->_rc, visit);
+}
+
+template <typename T, typename VST>
+void TravelInRecursion(BinNodePosi(T) pbin_node, VST &visit) {
+	if (!pbin_node) return;
+	TravelInRecursion(pbin_node->_lc, visit);
+	visit(pbin_node->_data);
+	TravelInRecursion(pbin_node->_rc, visit);
+}
+
+template <typename T, typename VST>
+void TravelPostRecursion(BinNodePosi(T) pbin_node, VST &visit) {
+	if (!pbin_node) return;
+	TravelPostRecursion(pbin_node->_lc, visit);
+	TravelPostRecursion(pbin_node->_rc, visit);
+	visit(pbin_node->_data);
 }
 
 // template <typename T>

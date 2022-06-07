@@ -83,9 +83,14 @@ void TestBinTree() {
 	// bin_tree.AttachAsRC(bin_tree.Root()->_rc, &&sub_tree);
 	printf("After bin_tree._size = %d\n", bin_tree.Size());
 	VST<int> visit;
+	printf("TravelLevel\n");
 	bin_tree.TravelLevel(visit);
+	// printf("TravelPre\n");
 	bin_tree.TravelPre(visit);
-	printf("\n");
+	// printf("TravelIn\n");
+	bin_tree.TravelIn(visit);
+	// printf("TravelPost\n");
+	bin_tree.TravelPost(visit);
 }
 
 int main() {
