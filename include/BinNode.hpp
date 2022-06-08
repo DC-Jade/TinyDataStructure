@@ -130,7 +130,7 @@ void BinNode<T>::TravelIn(VST &visit) {
 
 template <typename T> template <typename VST>
 void BinNode<T>::TravelPost(VST &visit) {
-	switch (rand() % 1) {
+	switch (rand() % 2) {
 		case 1: 
 			printf("TravelPostIteration\n"); TravelPostIteration(this, visit); break;
 		default: 
@@ -303,8 +303,29 @@ void TravelPostRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 	visit(pbin_node->_data);
 }
 
+template <typename T>
+/* HVLL refers to highest visible left leaf */
+void GoToHVLL (Stack<BinNodePosi(T)> &s_pbn) {
+	BinNodePosi(T) pbin_node;
+	while ((pbin_node = s_pbn.Top())) {
+		if (HasLChild(*pbin_node)) {
+			if (HasRChild(*pbin_node)) { s_pbn.Push(pbin_node->_rc); }
+			s_pbn.Push(pbin_node->_lc);
+		} else { s_pbn.Push(pbin_node->_rc); }
+	} 
+	s_pbn.Pop();
+}
+
 template <typename T, typename VST>
-void TravelPostIteration(BinNodePosi(T) pbin_node, VST &visit) {}
+void TravelPostIteration(BinNodePosi(T) pbin_node, VST &visit) {
+	Stack<BinNodePosi(T)> s_pbn;
+	if (pbin_node) s_pbn.Push(pbin_node);
+	while (!s_pbn.Empty()) {
+		if (s_pbn.Top() != pbin_node->_parent) GoToHVLL(s_pbn);
+		pbin_node = s_pbn.Pop();
+		visit(pbin_node->_data);
+	}
+}
 
 
 

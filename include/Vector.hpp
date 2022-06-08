@@ -25,7 +25,7 @@ template <typename T> class Vector {
 
 public:
   Vector(int c = DEFAULT_CAPACITY);
-  Vector(Vector<T> const &vec);
+  Vector(const Vector<T> &vec);
   ~Vector();
 
   Vector<T>& operator=(const Vector<T> &vec);
@@ -80,18 +80,21 @@ Vector<T>::Vector(int c) {
 
 // TODO
 template <typename T>
-Vector<T>::Vector(const Vector<T> &vec) {
-  _size = vec._size;
-  _capacity = vec._capacity;
+Vector<T>::Vector(const Vector<T> &vec){
+  this->_size = vec._size;
+  this->_capacity = vec._capacity;
+	this->_elem = new T[_capacity = _capacity * 2];
   for (Rank i = 0; i < _size; ++i) {
-    _elem[i] = vec[i];
+		/* wrong */
+		// _elem[i] = vec[i];
+		_elem[i] = vec._elem[i];
   }
 }
 
 template <typename T>
 Vector<T>::~Vector(){
   delete[] _elem;
-  printf("\nVector deconstructor\n");
+  printf("Vector deconstructor\n");
 }
 
 template <typename T>
