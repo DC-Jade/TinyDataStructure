@@ -1,3 +1,6 @@
+#ifndef INCLUDE_STACK_H
+#define INCLUDE_STACK_H
+
 #include "../include/Vector.hpp"
 
 namespace mydatastructure {
@@ -32,5 +35,6 @@ bool Stack<T>::Empty() {
   return (this->Size() == 0) ? true : false;
 }
 
+}	/* namespace mydatastructure */
 
-}  // namespace mydatastructure
+#endif

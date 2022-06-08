@@ -75,7 +75,7 @@ template <typename T>
 Vector<T>::Vector(int c) {
   _elem = new T[_capacity = c];
   _size = 0;
-  std::cout << "default constructor of Vector" << std::endl;
+  printf("Vector constructor\n");
 }
 
 // TODO
@@ -91,7 +91,7 @@ Vector<T>::Vector(const Vector<T> &vec) {
 template <typename T>
 Vector<T>::~Vector(){
   delete[] _elem;
-  std::cout << "deconstructor of Vector" << std::endl;
+  printf("\nVector deconstructor\n");
 }
 
 template <typename T>
@@ -102,12 +102,13 @@ T& Vector<T>::operator[](Rank r) {
 template <typename T>
 void Vector<T>::Tranverse() {
   // Vector<int> iv;
-  std::cout << "Tranverse " << std::endl;
+  printf("Tranverse\n");
   for (int i = 0; i < _size; ++i)
   {
-    std::cout << _elem[i] << "\t";
+		std::cout << _elem[i];
+		printf("\t");
   }
-  std::cout << std::endl;
+  printf("\n");
 }
 
 template <typename T>
@@ -156,9 +157,7 @@ T Vector<T>::Remove(Rank r) {
 
 // assert: 0<= lo < hi <= _size
 template <typename T>
-Rank Vector<T>::Find(const T& e, 
-                                                       Rank lo, 
-                                                       Rank hi) const {
+Rank Vector<T>::Find(const T& e, Rank lo, Rank hi) const {
   // reverse Find, to maintain stable
   while ( (lo < hi--) && (e != _elem[hi]) ) { }  
   return (lo < hi) ? hi : -1;    // false -1

@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <ctime>
 
 #include "../include/Vector.hpp"
 #include "../include/List.hpp"
@@ -63,6 +64,7 @@ void TestBinNode() {
 }
 
 void TestBinTree() {
+	srand(time(nullptr));
 	BinTree<int> bin_tree;
 	bin_tree.InsertAsRoot(10);
 	bin_tree.InsertAsLC(bin_tree.Root(), 9);
@@ -83,13 +85,16 @@ void TestBinTree() {
 	// bin_tree.AttachAsRC(bin_tree.Root()->_rc, &&sub_tree);
 	printf("After bin_tree._size = %d\n", bin_tree.Size());
 	VST<int> visit;
+	printf("\n");
 	printf("TravelLevel\n");
 	bin_tree.TravelLevel(visit);
-	// printf("TravelPre\n");
+	printf("\n");
 	bin_tree.TravelPre(visit);
 	// printf("TravelIn\n");
+	printf("\n");
 	bin_tree.TravelIn(visit);
 	// printf("TravelPost\n");
+	printf("\n");
 	bin_tree.TravelPost(visit);
 }
 

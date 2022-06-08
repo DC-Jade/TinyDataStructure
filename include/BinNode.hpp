@@ -2,6 +2,7 @@
 #define INCLUDE_BINNODE_H
 
 #include "../include/Queue.hpp"
+#include "../include/Stack.hpp"
 
 namespace mydatastructure {
 #define BinNodePosi(T) BinNode<T>*
@@ -71,6 +72,19 @@ BinNodePosi(T) BinNode<T>::InsertAsRC(const T &e) {
 	return _rc = new BinNode<T>(e, this);
 } 
 
+template <typename T>
+BinNodePosi(T) BinNode<T>::Succ() {
+	BinNodePosi(T) successor = this;
+	if (_rc) { 
+		successor = _rc;
+		while (HasLChild(*successor)) { successor = successor->_lc; }
+	} else {
+		while (IsRChild(*successor)) { successor = successor->_parent; }
+		successor = successor->_parent;
+	}
+	return successor;
+}
+
 template <typename T> template <typename VST>
 void BinNode<T>::TravelLevel(VST &visit) {
 	Queue<BinNodePosi(T)> q_pbn;
@@ -86,7 +100,9 @@ void BinNode<T>::TravelLevel(VST &visit) {
 
 template <typename T> template <typename VST>
 void BinNode<T>::TravelPre(VST &visit) {
-	switch (rand() % 1) {
+	switch (rand() % 2) {
+		case 1:
+			printf("TravelPreIteration\n"); TravelPreIteration(this, visit); break;
 		default:
 			printf("TravelPreRecursion\n"); TravelPreRecursion(this, visit); break;
 	}
@@ -94,33 +110,30 @@ void BinNode<T>::TravelPre(VST &visit) {
 }
 
 template <typename T> template <typename VST>
-void BinNode<T>::TravelPost(VST &visit) {
-	switch (rand() % 1) {
-		default: 
-			printf("TravelPostRecursion\n"); TravelPostRecursion(this, visit); break;
-	}
-	printf("\n");
-}
-
-template <typename T> template <typename VST>
 void BinNode<T>::TravelIn(VST &visit) {
-	switch (rand() % 1) {
+	switch (rand() % 3) {
+		case 1:
+			printf("TravelInItreationOne\n");
+			TravelInIterationOne(this, visit); break;
+		case 2:
+			printf("TravelInItreationTwo\n");
+			TravelInIterationTwo(this, visit); break;
 		default: 
 			printf("TravelInRecursion\n"); TravelInRecursion(this, visit); break;
 	}
 	printf("\n");
 }
 
-// template <typename T, typename VST>
-// void BinNode<T>::TravelIn(VST &visit) {
-	// switch(rand() % 1 + 1) {
-		// case 1: TravelInIterationOne(this, visit); break;
-		// case 2: TravelInIterationTwo(this, visit); break;
-		// case 3: TravelInIterationThree(this, visit); break;
-		// case 4: TravelInIterationFour(this, visit); break;
-		// default: TravelInRecusion(this, visit); break;
-	// }
-// }
+template <typename T> template <typename VST>
+void BinNode<T>::TravelPost(VST &visit) {
+	switch (rand() % 1) {
+		case 1: 
+			printf("TravelPostIteration\n"); TravelPostIteration(this, visit); break;
+		default: 
+			printf("TravelPostRecursion\n"); TravelPostRecursion(this, visit); break;
+	}
+	printf("\n");
+}
 
 // template <typename T>
 // int BinNode<T>::Size() {}
@@ -198,12 +211,66 @@ void TravelPreRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 	TravelPreRecursion(pbin_node->_rc, visit);
 }
 
+template <typename T, typename VST> void VisitAlongLeftBranch(BinNodePosi(T) pbin_node, VST &visit,
+	Stack<BinNodePosi(T)> &s_pbn) {
+	while (pbin_node) {
+		visit(pbin_node->_data);
+		s_pbn.Push(pbin_node->_rc);
+		pbin_node = pbin_node->_lc;
+	}
+}
+
+template <typename T, typename VST>
+void TravelPreIteration(BinNodePosi(T) pbin_node, VST &visit) {
+	Stack<BinNodePosi(T)> s_pbn;
+	while (1) {
+		VisitAlongLeftBranch(pbin_node, visit, s_pbn);
+		if (s_pbn.Empty()) break;
+		pbin_node = s_pbn.Pop();
+	}
+}
+
 template <typename T, typename VST>
 void TravelInRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 	if (!pbin_node) return;
 	TravelInRecursion(pbin_node->_lc, visit);
 	visit(pbin_node->_data);
 	TravelInRecursion(pbin_node->_rc, visit);
+}
+
+template <typename T>
+void GoAlongLeftBranch(BinNodePosi(T) pbin_node, Stack<BinNodePosi(T)> &s_pbn) {
+	while (pbin_node) {
+		s_pbn.Push(pbin_node);
+		pbin_node = pbin_node->_lc;
+	}
+}
+
+template <typename T, typename VST>
+void TravelInIterationOne(BinNodePosi(T) pbin_node, VST &visit) {
+	Stack<BinNodePosi(T)> s_pbn;
+	while (1) {
+		GoAlongLeftBranch(pbin_node, s_pbn);
+		if (s_pbn.Empty()) break;
+		pbin_node = s_pbn.Pop();
+		visit(pbin_node->_data);
+		pbin_node = pbin_node->_rc;
+	}
+}
+
+template <typename T, typename VST>
+void TravelInIterationTwo(BinNodePosi(T) pbin_node, VST &visit) {
+	Stack<BinNodePosi(T)> s_pbn;
+	while (1) {
+		if (pbin_node) {
+			s_pbn.Push(pbin_node);
+			pbin_node = pbin_node->_lc;
+		} else if (!s_pbn.Empty()) {
+			pbin_node = s_pbn.Pop();
+			visit(pbin_node->_data);
+			pbin_node = pbin_node->_rc;
+		} else  { break; }
+	}
 }
 
 template <typename T, typename VST>
@@ -213,6 +280,11 @@ void TravelPostRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 	TravelPostRecursion(pbin_node->_rc, visit);
 	visit(pbin_node->_data);
 }
+
+template <typename T, typename VST>
+void TravelPostIteration(BinNodePosi(T) pbin_node, VST &visit) {}
+
+
 
 // template <typename T>
 // BinNodePosi(T) FromParentTo(const BinNode<T> &rbin_node) {
