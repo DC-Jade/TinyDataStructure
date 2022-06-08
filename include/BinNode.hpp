@@ -111,13 +111,17 @@ void BinNode<T>::TravelPre(VST &visit) {
 
 template <typename T> template <typename VST>
 void BinNode<T>::TravelIn(VST &visit) {
-	switch (rand() % 3) {
+	switch (rand() % 1 + 3) {
 		case 1:
 			printf("TravelInItreationOne\n");
 			TravelInIterationOne(this, visit); break;
 		case 2:
 			printf("TravelInItreationTwo\n");
 			TravelInIterationTwo(this, visit); break;
+		case 3:
+			/* no stack S(1) */
+			printf("TravelInItreationThree\n");
+			TravelInIterationThree(this, visit); break;
 		default: 
 			printf("TravelInRecursion\n"); TravelInRecursion(this, visit); break;
 	}
@@ -152,12 +156,12 @@ bool IsRoot(const BinNode<T> &rbin_node) {
 
 template <typename T>
 bool IsLChild(const BinNode<T> &rbin_node) {
-	return rbin_node._parent && rbin_node._parent->_lc;
+	return rbin_node._parent && rbin_node._parent->_lc == &rbin_node;
 }
 
 template <typename T>
 bool IsRChild(const BinNode<T> &rbin_node) {
-	return rbin_node._parent && rbin_node._parent->_rc;
+	return rbin_node._parent && rbin_node._parent->_rc == &rbin_node; 
 }
 
 template <typename T>
@@ -270,6 +274,24 @@ void TravelInIterationTwo(BinNodePosi(T) pbin_node, VST &visit) {
 			visit(pbin_node->_data);
 			pbin_node = pbin_node->_rc;
 		} else  { break; }
+	}
+}
+
+template <typename T, typename VST>
+void TravelInIterationThree(BinNodePosi(T) pbin_node, VST &visit) {
+	bool backtrack = false;
+	while (true) {
+		if (!backtrack && HasLChild(*pbin_node)) { pbin_node = pbin_node->_lc; }
+		else {
+			visit(pbin_node->_data);
+			if (HasRChild(*pbin_node)) {
+				pbin_node = pbin_node->_rc;
+				backtrack = false;
+			} else {
+				if (!(pbin_node = pbin_node->Succ())) break;
+				backtrack = true;
+			}
+		}
 	}
 }
 

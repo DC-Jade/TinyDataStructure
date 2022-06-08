@@ -69,7 +69,7 @@ void TestBinTree() {
 	bin_tree.InsertAsRoot(10);
 	bin_tree.InsertAsLC(bin_tree.Root(), 9);
 	bin_tree.InsertAsRC(bin_tree.Root(), 11);
-	bin_tree.InsertAsRC(bin_tree.Root()->_lc, 8);
+	bin_tree.InsertAsLC(bin_tree.Root()->_lc, 8);
 	printf("%p\n", bin_tree.Root());
 	printf("Before bin_tree._size = %d\n", bin_tree.Size());
 
