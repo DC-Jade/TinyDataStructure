@@ -56,7 +56,7 @@ public:
 	bool operator==(const BinNode<T> *pbin_node) const;
 	// friend BinNodePosi(T) FromParentTo(BinNode<T> *pbin_node);
 	
-private:
+protected:
 	int _size;
 	BinNodePosi(T) _root;
 };	/* class BinTree */

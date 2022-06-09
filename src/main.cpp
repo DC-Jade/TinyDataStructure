@@ -8,11 +8,11 @@
 #include "../include/BinTree.hpp"
 #include "../include/BinNode.hpp"
 #include "../include/Entry.hpp"
-// #include "../include/BinarySearchTree.hpp"
+#include "../include/BinarySearchTree.hpp"
 
 using mydatastructure::BinNode;
 using mydatastructure::BinTree;
-// using mydatastructure::BST;
+using mydatastructure::BST;
 using mydatastructure::Entry;
 using mydatastructure::List;
 using mydatastructure::ListNode;
@@ -106,8 +106,19 @@ void TestEntry() {
 	printf("entry_cp: key = %d value = %d\n", entry_cp._key, entry_cp._value);
 }
 
+void TestBST() {
+	BST<int> bst;
+	VST<int> visit;
+	bst.InsertAsRoot(20);
+	bst.InsertAsLC(bst.Root(), 19);
+	bst.InsertAsRC(bst.Root(), 21);
+	printf("TravelIn\n");
+	bst.TravelIn(visit);
+}
+
 int main() {
 	// TestBinNode();
 	// TestBinTree();
-	TestEntry();
+	// TestEntry();
+	TestBST();
 }
