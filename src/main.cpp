@@ -24,7 +24,6 @@ using mydatastructure::Stack;
 using mydatastructure::Vector;
 using mydatastructure::VST;
 // using mydatastructure::VST;
-using std::printf;
 
 void Tranverse(Vector<int>& vec) {
   int vec_size = vec.Size();

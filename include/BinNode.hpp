@@ -48,7 +48,7 @@ public:
 /* function member */
 template <typename T>
 BinNode<T>::BinNode() :
-	_parent(nullptr), _lc(nullptr), _rc(nullptr),
+	_data(T()), _parent(nullptr), _lc(nullptr), _rc(nullptr),
 	_height(0), _npl(0), _color(RB_RED) { }
 
 // template <typename T>
@@ -57,9 +57,9 @@ BinNode<T>::BinNode() :
 //   int height = 0, int npl = 1, RBColor color = RB_RED) : _data(e) { }
 
 template <typename T>
-BinNode<T>::BinNode(T e, BinNodePosi(T) parent, BinNodePosi(T) lc,
+BinNode<T>::BinNode(T data, BinNodePosi(T) parent, BinNodePosi(T) lc,
 	BinNodePosi(T) rc, int height, int npl, RBColor color) :
-	_data(e), _parent(parent), _lc(lc), _rc(rc), _height(height),
+	_data(data), _parent(parent), _lc(lc), _rc(rc), _height(height),
 	_npl(npl), _color(color) { } 
 
 template <typename T>
