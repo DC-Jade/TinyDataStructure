@@ -8,7 +8,7 @@ class Entry {
 public:
 	/* constructor */
 	Entry();
-	Entry(K key = K(), V value = V());
+	Entry(K key, V value);
 	Entry(const Entry<K, V> &entry);
 
 	/* interface */
@@ -24,10 +24,7 @@ public:
 
 /* function member */
 template <typename K, typename V>
-Entry<K, V>::Entry() { 
-	_key = K();
-	_value = V();
-}
+Entry<K, V>::Entry() : _key(K()), _value(V()) { }
 
 template <typename K, typename V>
 Entry<K, V>::Entry(K key, V value) : _key(key), _value(value) { }

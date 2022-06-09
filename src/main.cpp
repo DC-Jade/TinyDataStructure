@@ -97,7 +97,17 @@ void TestBinTree() {
 	bin_tree.TravelPost(visit);
 }
 
+void TestEntry() {
+	Entry<int, int> entry_one;
+	Entry<int, int> entry_two(2, 2);
+	Entry<int, int> entry_cp(entry_two);
+	printf("entry_one: key = %d value = %d\n", entry_one._key, entry_one._value);
+	printf("entry_two: key = %d value = %d\n", entry_two._key, entry_two._value);
+	printf("entry_cp: key = %d value = %d\n", entry_cp._key, entry_cp._value);
+}
+
 int main() {
 	// TestBinNode();
-	TestBinTree();
+	// TestBinTree();
+	TestEntry();
 }
