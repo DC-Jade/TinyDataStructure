@@ -112,8 +112,16 @@ void TestBST() {
 	bst.InsertAsRoot(20);
 	bst.InsertAsLC(bst.Root(), 19);
 	bst.InsertAsRC(bst.Root(), 21);
+	printf("_root_>_data = %d\n", bst.Root()->_data);
 	printf("TravelIn\n");
 	bst.TravelIn(visit);
+	BinNodePosi(int) rpbin_node = bst.Search(19);
+	printf("Search = %d\n", rpbin_node->_data);
+	// printf("_root_>_data = %d\n", bst.Root()->_data);
+	bst.Remove(20);
+	bst.Remove(19);
+	printf("TravelIn After Removeing\n");
+	bst.BinTree<int>::TravelIn(visit);
 }
 
 int main() {

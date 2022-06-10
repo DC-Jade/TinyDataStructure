@@ -26,8 +26,13 @@ BinNodePosi(T) &SearchIn(BinNodePosi(T) &pbin_node, const T &key,
 	BinNodePosi(T) &hot) {
 	if (!pbin_node || key == pbin_node->_data) return pbin_node;
 	hot = pbin_node;
-	pbin_node = (key < pbin_node->_data) ? pbin_node->_lc : pbin_node->_rc;
-	return SearchIn(pbin_node, key, hot);
+	/* wrong, should change pbin_node */
+	// pbin_node = (key < pbin_node->_data) ? pbin_node->_lc : pbin_node->_rc;
+	if (key < pbin_node->_data) {
+		return SearchIn(pbin_node->_lc, key, hot);
+	} else {
+		return SearchIn(pbin_node->_rc, key, hot);
+	}
 } 
 
 template <typename T>
@@ -51,11 +56,34 @@ bool BST<T>::Remove(const T &e) {
 	BinNodePosi(T) &rpbin_node = Search(e);
 	if (!rpbin_node) return false;
 	// RemoveAt(rpbin_node, _hot);
-	RemoveAt(rpbin_node);
-	BST::_hot = nullptr;
+	RemoveAt(rpbin_node, _hot);
+	// BST::_hot = nullptr;
 	--BST::_size;
 	BST::UpdateHeightAbove(_hot);
 	return true;
+}
+
+template <typename T>
+BinNodePosi(T) RemoveAt(BinNodePosi(T) &rpbin_node, BinNodePosi(T) &hot){
+	BinNodePosi(T) w = rpbin_node;
+	BinNodePosi(T) succ = nullptr;
+	if (!HasLChild(*rpbin_node)) {
+		rpbin_node = rpbin_node->_rc;
+		succ = rpbin_node;
+	} else if (!HasRChild(*rpbin_node)) {
+		rpbin_node = rpbin_node->_lc;
+		succ = rpbin_node;
+	} else {
+		w = w->Succ();
+		std::swap(w->_data, rpbin_node->_data);
+		BinNodePosi(T) u = w->_parent;
+		succ = w->_rc;
+		(u == rpbin_node) ? u->_rc = succ : u->_lc = succ;
+	}
+	hot = w->_parent;
+	if (succ) succ->_parent = hot;
+	// w->_data = T();
+	return succ;
 }
 
 }	/* namespace mydatastructure */
