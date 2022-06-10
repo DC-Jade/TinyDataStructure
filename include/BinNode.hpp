@@ -208,14 +208,15 @@ BinNodePosi(T) Uncle(const BinNode<T> &rbin_node) {
 }
 
 template <typename T, typename VST>
-void TravelPreRecursion(BinNodePosi(T) pbin_node, VST &visit) {
+static void TravelPreRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 	if (!pbin_node) return;
 	visit(pbin_node->_data);
 	TravelPreRecursion(pbin_node->_lc, visit);
 	TravelPreRecursion(pbin_node->_rc, visit);
 }
 
-template <typename T, typename VST> void VisitAlongLeftBranch(BinNodePosi(T) pbin_node, VST &visit,
+template <typename T, typename VST>
+static void VisitAlongLeftBranch(BinNodePosi(T) pbin_node, VST &visit,
 	Stack<BinNodePosi(T)> &s_pbn) {
 	while (pbin_node) {
 		visit(pbin_node->_data);
@@ -225,7 +226,7 @@ template <typename T, typename VST> void VisitAlongLeftBranch(BinNodePosi(T) pbi
 }
 
 template <typename T, typename VST>
-void TravelPreIteration(BinNodePosi(T) pbin_node, VST &visit) {
+static void TravelPreIteration(BinNodePosi(T) pbin_node, VST &visit) {
 	Stack<BinNodePosi(T)> s_pbn;
 	while (1) {
 		VisitAlongLeftBranch(pbin_node, visit, s_pbn);
@@ -235,7 +236,7 @@ void TravelPreIteration(BinNodePosi(T) pbin_node, VST &visit) {
 }
 
 template <typename T, typename VST>
-void TravelInRecursion(BinNodePosi(T) pbin_node, VST &visit) {
+static void TravelInRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 	if (!pbin_node) return;
 	TravelInRecursion(pbin_node->_lc, visit);
 	visit(pbin_node->_data);
@@ -243,7 +244,9 @@ void TravelInRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 }
 
 template <typename T>
-void GoAlongLeftBranch(BinNodePosi(T) pbin_node, Stack<BinNodePosi(T)> &s_pbn) {
+// void GoAlongLeftBranch(BinNodePosi(T) pbin_node, Stack<BinNodePosi(T)> &s_pbn) {
+static void GoAlongLeftBranch(
+	BinNodePosi(T) pbin_node, Stack<BinNodePosi(T)> &s_pbn) {
 	while (pbin_node) {
 		s_pbn.Push(pbin_node);
 		pbin_node = pbin_node->_lc;
@@ -251,7 +254,7 @@ void GoAlongLeftBranch(BinNodePosi(T) pbin_node, Stack<BinNodePosi(T)> &s_pbn) {
 }
 
 template <typename T, typename VST>
-void TravelInIterationOne(BinNodePosi(T) pbin_node, VST &visit) {
+static void TravelInIterationOne(BinNodePosi(T) pbin_node, VST &visit) {
 	Stack<BinNodePosi(T)> s_pbn;
 	while (1) {
 		GoAlongLeftBranch(pbin_node, s_pbn);
@@ -263,7 +266,7 @@ void TravelInIterationOne(BinNodePosi(T) pbin_node, VST &visit) {
 }
 
 template <typename T, typename VST>
-void TravelInIterationTwo(BinNodePosi(T) pbin_node, VST &visit) {
+static void TravelInIterationTwo(BinNodePosi(T) pbin_node, VST &visit) {
 	Stack<BinNodePosi(T)> s_pbn;
 	while (1) {
 		if (pbin_node) {
@@ -278,7 +281,7 @@ void TravelInIterationTwo(BinNodePosi(T) pbin_node, VST &visit) {
 }
 
 template <typename T, typename VST>
-void TravelInIterationThree(BinNodePosi(T) pbin_node, VST &visit) {
+static void TravelInIterationThree(BinNodePosi(T) pbin_node, VST &visit) {
 	bool backtrack = false;
 	while (true) {
 		if (!backtrack && HasLChild(*pbin_node)) { pbin_node = pbin_node->_lc; }
@@ -296,7 +299,7 @@ void TravelInIterationThree(BinNodePosi(T) pbin_node, VST &visit) {
 }
 
 template <typename T, typename VST>
-void TravelPostRecursion(BinNodePosi(T) pbin_node, VST &visit) {
+static void TravelPostRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 	if (!pbin_node) return;
 	TravelPostRecursion(pbin_node->_lc, visit);
 	TravelPostRecursion(pbin_node->_rc, visit);
@@ -305,7 +308,7 @@ void TravelPostRecursion(BinNodePosi(T) pbin_node, VST &visit) {
 
 template <typename T>
 /* HVLL refers to highest visible left leaf */
-void GoToHVLL (Stack<BinNodePosi(T)> &s_pbn) {
+static void GoToHVLL (Stack<BinNodePosi(T)> &s_pbn) {
 	BinNodePosi(T) pbin_node;
 	while ((pbin_node = s_pbn.Top())) {
 		if (HasLChild(*pbin_node)) {
@@ -317,7 +320,7 @@ void GoToHVLL (Stack<BinNodePosi(T)> &s_pbn) {
 }
 
 template <typename T, typename VST>
-void TravelPostIteration(BinNodePosi(T) pbin_node, VST &visit) {
+static void TravelPostIteration(BinNodePosi(T) pbin_node, VST &visit) {
 	Stack<BinNodePosi(T)> s_pbn;
 	if (pbin_node) s_pbn.Push(pbin_node);
 	while (!s_pbn.Empty()) {

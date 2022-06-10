@@ -92,7 +92,7 @@ int BinTree<T>::Remove(BinNode<T> *pbin_node) {
 
 /* parameter is pointer to check whether exist but reference cannot */
 template <typename T>
-int RemoveAt(BinNode<T> *pbin_node) {
+static int RemoveAt(BinNode<T> *pbin_node) {
 	if (!pbin_node) return 0;
 	int n = 1 + RemoveAt(pbin_node->_lc) + RemoveAt(pbin_node->_rc);
 	delete pbin_node;

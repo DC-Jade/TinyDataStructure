@@ -120,7 +120,7 @@ void TestBST() {
 	// printf("_root_>_data = %d\n", bst.Root()->_data);
 	bst.Remove(20);
 	bst.Remove(19);
-	printf("TravelIn After Removeing\n");
+	printf("TravelIn After Removing\n");
 	bst.BinTree<int>::TravelIn(visit);
 }
 
